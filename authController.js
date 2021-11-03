@@ -14,7 +14,7 @@ class authController {
             const { name, password } = req.body;
             const candidate = await db.User.findOne({ name })
             if (candidate) {
-                return res.status(400).json({ massage: "Пользователь с таким именем уже существует" })
+                return res.status(400).json({ message: "Пользователь с таким именем уже существует" })
             }
             const hashPassword = bcrypt.hashSync(password, 7);
             const userRole = await db.Role.findOne({ name: "USER" });
@@ -30,6 +30,16 @@ class authController {
 
     async login(req, res) {
         try {
+            const { name, password } = req.body
+            const user = await db.User.findOne({ name })
+            if (!user) {
+                return res.status(400).json({ message: `Пользователь ${name} не найден` })
+            }
+
+            const validPassword = bcrypt.compareSync(password, user.password);
+            if (!validPassword) {
+                return res.status(400).json({ massage: "Введён не верный пароль" })
+            }
 
         } catch (e) {
             console.log(e)
