@@ -1,10 +1,16 @@
 const bcrypt = require('bcrypt');
 const db = require('./models/index')
+const { validationResult } = require('express-validator')
 
 //Как удалить не нужные зависимости
+//регистрация(добавление) нового пользователя
 class authController {
     async registration(req, res) {
         try {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                return res.status(400).json({ message: "Ошибка при регистрации", errors })
+            }
             const { name, password } = req.body;
             const candidate = await db.User.findOne({ name })
             if (candidate) {
