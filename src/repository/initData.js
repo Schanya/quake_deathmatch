@@ -1,4 +1,4 @@
-const db = require('./index');
+const db = require('../models/index');
 
 module.exports = () => {
     db.Role.findOne({ name: "USER" })
