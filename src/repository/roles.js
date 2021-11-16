@@ -6,6 +6,9 @@ class Roles {
         const userRole = await db.Role.findOne({ where: { name } });
         return userRole;
     }
+    static async addRoleToUser(user, userRole) {
+        await user.addRole(userRole);
+    }
 }
 
 module.exports = Roles;
