@@ -4,6 +4,7 @@ const BaseError = require("../errors/error");
 const errorHandlerMiddleware = (err, req, res, next) => {
 
     if (err instanceof BaseError) {
+
         return res.status(err.statusCode).json({ msg: err.message });
     }
 

@@ -1,11 +1,11 @@
 const { validationResult } = require('express-validator');
 const { BadRequestError } = require('../errors');
 const registration = require('../services/registration');
+const Response = require('../helpers/response');
 
 class authController {
     async registration(req, res, next) {
         try {
-
             //
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
@@ -17,7 +17,7 @@ class authController {
 
             await registration(name, password);
 
-            res.json(`Пользователь с именем  ${name} был успешно зарегестрирован`);
+            res.status(200).json(new Response(`Пользователь с именем  ${name} был успешно зарегестрирован`));
 
         } catch (err) {
 
