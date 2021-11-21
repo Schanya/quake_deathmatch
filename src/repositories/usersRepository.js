@@ -1,7 +1,6 @@
 // db???
 const db = require('../models/index');
 const bcrypt = require('bcrypt');
-const Roles = require('./roles');
 
 class Users {
     static async findOneByName(name) {

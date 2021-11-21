@@ -1,8 +1,8 @@
 const { validationResult } = require('express-validator');
 const BaseError = require('../errors/error');
-const registration = require('../services/registration');
+const Registration = require('../services/registration');
 
-class authController {
+class AuthController {
     async registration(req, res) {
         try {
             const errors = validationResult(req);
@@ -10,7 +10,7 @@ class authController {
                 throw new BaseError(400, 'userRegistrationValidationError', "Ошибка при регистрации");
             }
             const { name, password } = req.body;
-            res.json(await registration(name, password));
+            res.json(await Registration.userRegistration(name, password));
 
         } catch (e) {
             console.log(e)
@@ -41,7 +41,7 @@ class authController {
     }
 }
 
-module.exports = new authController()
+module.exports = new AuthController()
 
 /*
 
