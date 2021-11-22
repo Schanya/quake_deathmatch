@@ -1,27 +1,36 @@
 const { validationResult } = require('express-validator');
-const BaseError = require('../errors/error');
+const { BadRequestError } = require('../errors');
 const registration = require('../services/registration');
+const Response = require('../helpers/response');
 
 class authController {
-    async registration(req, res) {
+    async registration(req, res, next) {
         try {
+            //
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
-                throw new BaseError(400, 'userRegistrationValidationError', "Ошибка при регистрации");
+                throw new BadRequestError("Ошибка при регистрации");
             }
-            const { name, password } = req.body;
-            res.json(await registration(name, password));
+            //уйдёт, когда нипишу валидацию
 
-        } catch (e) {
-            console.log(e)
-            if (e instanceof BaseError) {
-                res.status(e.status).json({ message: e.message })
-            } else {
-                res.status(500).json({ message: 'server error' })
-            }
+            const { name, password } = req.body;
+
+            await registration(name, password);
+
+            res.status(200).json(new Response(`Пользователь с именем  ${name} был успешно зарегестрирован`));
+
+        } catch (err) {
+
+            return next(err)
         }
     }
-    async login(req, res) {
+}
+
+module.exports = new authController()
+
+/*
+
+async login(req, res) {
         try {
             const { name, password } = req.body
             const user = await db.User.findOne({ name })
@@ -39,11 +48,6 @@ class authController {
             res.status(400).json({ message: 'Login error' })
         }
     }
-}
-
-module.exports = new authController()
-
-/*
 
  async getUsers(req, res) {
      try {
