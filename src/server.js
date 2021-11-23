@@ -3,12 +3,17 @@ const app = express();
 const logger = require('./utils/logger');
 const DbInitialize = require('./services/dbInitialize');
 const authRouter = require('./routers/authRouter');
+const errorHandlerMiddleware = require('./middleware/errorHandler');
+
 
 app.use(express.json());
 //роуты нельзя тут инит (вынести в роуты создать index.js и там их инит как и бд)
 app.use("/auth", authRouter);
 
 app.logger = logger;
+
+
+app.use(errorHandlerMiddleware);
 
 //initialize возвращает промис, поэтому можно использовать then
 //await не даёт использовать express

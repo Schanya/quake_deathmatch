@@ -6,25 +6,17 @@ const Response = require('../helpers/response');
 
 class AuthController {
     async registration(req, res, next) {
-        try {
-            //
-            const errors = validationResult(req);
-            if (!errors.isEmpty()) {
-                throw new BadRequestError("Ошибка при регистрации");
-            }
-            //уйдёт, когда нипишу валидацию
-
-            const { name, password } = req.body;
-            res.json(await Registration.userRegistration(name, password));
-
-            await registration(name, password);
-
-            res.status(200).json(new Response(`Пользователь с именем  ${name} был успешно зарегестрирован`));
-
-        } catch (err) {
-
-            return next(err)
+        //
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            throw new BadRequestError("Ошибка при регистрации");
         }
+        //уйдёт, когда нипишу валидацию
+
+        const { name, password } = req.body;
+        await registration(name, password);
+
+        res.status(200).json(new Response(`Пользователь с именем  ${name} был успешно зарегестрирован`));
     }
 }
 
