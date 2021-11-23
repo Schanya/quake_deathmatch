@@ -10,8 +10,11 @@ app.use("/auth", authRouter);
 
 app.logger = logger;
 
-DbInitialize.initialize(app);
-
-app.listen(3000, function () {
-  console.log("Сервер ожидает подключения...");
+//initialize возвращает промис, поэтому можно использовать then
+//await не даёт использовать express
+DbInitialize.initialize(app).then(() => {
+  app.listen(3000, function () {
+    console.log("Сервер ожидает подключения...");
+  });
 });
+

@@ -1,20 +1,16 @@
 const db = require('../models/index');
 
 class InitData {
-    initRoles = () => {
-        db.Role.findOne({ name: "USER" })
-            .then(role => {
-                if (!role) {
-                    db.Role.create({ name: "USER" });
-                }
-            });
+    initRoles = async () => {
+        const userRole = await db.Role.findOne({ name: "USER" })
+        if (!userRole) {
+            await db.Role.create({ name: "USER" });
+        }
 
-        db.Role.findOne({ name: "ADMIN" })
-            .then(role => {
-                if (!role) {
-                    db.Role.create({ name: "ADMIN" });
-                }
-            });
+        const adminRole = await db.Role.findOne({ name: "ADMIN" })
+        if (!adminRole) {
+            await db.Role.create({ name: "ADMIN" });
+        }
     }
 }
 

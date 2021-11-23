@@ -1,16 +1,17 @@
 const InitData = require('../repositories/initData')
+const db = require("../models");
 
 class DbInitialize {
-    initialize = (app) => {
-        const db = require("../models");
+    initialize = async (app) => {
         app.set('sequelize', db.sequelize);
         app.set('models', db);
-        db.sequelize.sync()
-            .then(() => InitData.initRoles(db))
-            .then(() => app.logger.info('Sequelize synced'))
-            .catch((error) => {
-                app.logger.error('Sequelize sync failed: ', error.messag);
-            });
+        try {
+            await db.sequelize.sync();
+            app.logger.info('Sequelize synced');
+            await InitData.initRoles(db);
+        } catch (error) {
+            app.logger.error('Sequelize sync failed: ', error.messag);
+        };
     };
 }
 module.exports = new DbInitialize();
