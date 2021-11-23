@@ -1,14 +1,14 @@
 const express = require("express");
 const app = express();
 const logger = require('./utils/logger');
-const DbInitialize = require('./services/dbInitialize');
-const authRouter = require('./routers/authRouter');
+const DbInitialize = require('./db/dbInitialize');
+const router = require('./loader/routing');
 const errorHandlerMiddleware = require('./middleware/errorHandler');
 
 
 app.use(express.json());
 //роуты нельзя тут инит (вынести в роуты создать index.js и там их инит как и бд)
-app.use("/auth", authRouter);
+app.use(router);
 
 app.logger = logger;
 
