@@ -1,7 +1,7 @@
 //404 сервер не может найти данные согласно запросу
 
 const { StatusCodes } = require('http-status-codes');
-const BaseError = require('./error');
+const BaseError = require('./baseError');
 
 class NotFoundError extends BaseError {
 

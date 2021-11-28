@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const logger = require('./utils/logger');
-const DbInitialize = require('./db/dbInitialize');
+const DbInitialize = require('./db/initialize');
 const router = require('./loader/routing');
 const errorHandlerMiddleware = require('./middleware/errorHandler');
 
@@ -17,9 +17,12 @@ app.use(errorHandlerMiddleware);
 
 //initialize возвращает промис, поэтому можно использовать then
 //await не даёт использовать express
-DbInitialize.initialize(app).then(() => {
-  app.listen(3000, function () {
+const main = async () => {
+  await DbInitialize.initialize(app);
+  app.listen(3000, () => {
     console.log("Сервер ожидает подключения...");
   });
-});
+}
+
+main();
 

@@ -1,7 +1,7 @@
 //400 запрос к серверу содержит синтаксическую ошибку
 
 const { StatusCodes } = require('http-status-codes');
-const BaseError = require('./error');
+const BaseError = require('./baseError');
 
 class BadRequestError extends BaseError {
 

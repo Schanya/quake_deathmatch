@@ -1,7 +1,7 @@
-const BaseError = require('./error')
-const UnauthenticatedError = require('./unauthenticated')
-const NotFoundError = require('./notFound')
-const BadRequestError = require('./badRequest')
+const BaseError = require('./baseError')
+const UnauthenticatedError = require('./unauthError')
+const NotFoundError = require('./notfoundError')
+const BadRequestError = require('./badrequestError')
 
 module.exports = {
     BaseError,

@@ -1,5 +1,5 @@
 const { StatusCodes } = require("http-status-codes");
-const BaseError = require("../errors/error");
+const BaseError = require("../errors/baseError");
 
 const errorHandlerMiddleware = (err, req, res, next) => {
 
