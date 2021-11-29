@@ -1,32 +1,26 @@
 const { validationResult } = require('express-validator');
-const { BadRequestError } = require('../errors');
 const registration = require('../services/registration');
+const { BadRequestError } = require('../errors');
 const Response = require('../helpers/response');
 
-class authController {
+class AuthController {
     async registration(req, res, next) {
-        try {
-            //
-            const errors = validationResult(req);
-            if (!errors.isEmpty()) {
-                throw new BadRequestError("Ошибка при регистрации");
-            }
-            //уйдёт, когда нипишу валидацию
-
-            const { name, password } = req.body;
-
-            await registration(name, password);
-
-            res.status(200).json(new Response(`Пользователь с именем  ${name} был успешно зарегестрирован`));
-
-        } catch (err) {
-
-            return next(err)
+        //
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            throw new BadRequestError("Ошибка при регистрации");
         }
+        //уйдёт, когда нипишу валидацию
+
+        const { name, password } = req.body;
+
+        await registration.userRegistration(name, password);
+
+        res.status(200).json(new Response(`Пользователь с именем  ${name} был успешно зарегестрирован`));
     }
 }
 
-module.exports = new authController()
+module.exports = new AuthController()
 
 /*
 
@@ -48,6 +42,11 @@ async login(req, res) {
             res.status(400).json({ message: 'Login error' })
         }
     }
+}
+
+
+
+/*
 
  async getUsers(req, res) {
      try {
