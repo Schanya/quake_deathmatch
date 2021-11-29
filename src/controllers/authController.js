@@ -1,16 +1,8 @@
-const { validationResult } = require('express-validator');
 const registration = require('../services/registration');
-const { BadRequestError } = require('../errors');
 const Response = require('../helpers/response');
 
 class AuthController {
     async registration(req, res, next) {
-        //
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            throw new BadRequestError("Ошибка при регистрации");
-        }
-        //уйдёт, когда нипишу валидацию
 
         const { name, password } = req.body;
 
