@@ -1,7 +1,7 @@
 const { validationResult } = require('express-validator');
 const registration = require('../services/registration');
 const { BadRequestError } = require('../errors');
-const response = require('../helpers/response');
+const Response = require('../helpers/response');
 
 class AuthController {
     async registration(req, res, next) {
@@ -16,7 +16,7 @@ class AuthController {
 
         await registration.userRegistration(name, password);
 
-        res.status(200).json(new response(`Пользователь с именем  ${name} был успешно зарегестрирован`));
+        res.status(200).json(new Response(`Пользователь с именем  ${name} был успешно зарегестрирован`));
     }
 }
 

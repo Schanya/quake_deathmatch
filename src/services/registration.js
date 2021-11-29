@@ -1,21 +1,21 @@
-const roles = require('../repositories/rolesRepository')
-const users = require('../repositories/usersRepository')
+const rolesRepository = require('../repositories/rolesRepository')
+const usersRepository = require('../repositories/usersRepository')
 const { BadRequestError } = require('../errors');
 
 class Registration {
     userRegistration = async (name, password) => {
 
-        const candidate = await users.findOneByName(name);
+        const candidate = await usersRepository.findOneByName(name);
 
         if (candidate) {
             throw new BadRequestError(`Пользователь с именем  ${name} уже существует`);
         }
 
-        const userRole = await roles.getByName("USER");
+        const userRole = await rolesRepository.getByName("USER");
 
-        const newUser = await users.create(name, password);
+        const newUser = await usersRepository.create(name, password);
 
-        await roles.addRoleToUser(newUser, userRole);
+        await rolesRepository.addRoleToUser(newUser, userRole);
     }
 }
 
