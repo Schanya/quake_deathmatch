@@ -1,5 +1,5 @@
 //Правильно ли импортирован db? Создаётся ещё одно подключение или как это работает?
-const db = require('../models/index');
+const db = require('../models');
 
 class Roles {
     static async getByName(name) {

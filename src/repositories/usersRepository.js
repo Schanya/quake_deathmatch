@@ -1,5 +1,5 @@
 // db???
-const db = require('../models/index');
+const db = require('../models');
 const bcrypt = require('bcrypt');
 
 class Users {
