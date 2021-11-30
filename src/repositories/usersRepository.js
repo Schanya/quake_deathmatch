@@ -22,6 +22,10 @@ class Users {
         }
         return jwt.sign(paylod, secret, { expiresIn: "24" });
     }
+    async getAllUsers() {
+        const users = await db.User.findAll();
+        return users;
+    }
 }
 
 module.exports = new Users();
