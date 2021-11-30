@@ -11,5 +11,5 @@ module.exports = Joi.object().keys({
         .min(4)
         .max(10)
         .required()
-        .pattern(new RegExp("^[a-zA-Z0-9]{3,30}$"))
+        .pattern(new RegExp("^[a-zA-Z0-9]+$"))
 });
