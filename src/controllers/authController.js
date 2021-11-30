@@ -1,5 +1,6 @@
 const registration = require('../services/registration');
 const Response = require('../helpers/response');
+const login = require('../services/login');
 
 class AuthController {
     async registration(req, res, next) {
@@ -10,33 +11,19 @@ class AuthController {
 
         res.status(200).json(new Response(`Пользователь с именем  ${name} был успешно зарегестрирован`));
     }
-}
 
-module.exports = new AuthController()
+    async login(req, res) {
 
-/*
+        const { name, password } = req.body
 
-async login(req, res) {
-        try {
-            const { name, password } = req.body
-            const user = await db.User.findOne({ name })
-            if (!user) {
-                return res.status(400).json({ message: `Пользователь ${name} не найден` })
-            }
+        const token = await login.userLogin(name, password);
 
-            const validPassword = bcrypt.compareSync(password, user.password);
-            if (!validPassword) {
-                return res.status(400).json({ massage: "Введён не верный пароль" })
-            }
-
-        } catch (e) {
-            console.log(e)
-            res.status(400).json({ message: 'Login error' })
-        }
+        res.status(200).json({ token });
     }
 }
 
 
+module.exports = new AuthController()
 
 /*
 
