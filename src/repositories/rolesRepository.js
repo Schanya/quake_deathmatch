@@ -4,9 +4,11 @@ const db = require('../models');
 class Roles {
     async getByName(name) {
         const userRole = await db.Role.findOne({ where: { name } });
+
         return userRole;
     }
     async addRoleToUser(user, userRole) {
+
         await user.addRole(userRole);
     }
 }

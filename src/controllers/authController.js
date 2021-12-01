@@ -4,7 +4,6 @@ const loginService = require('../services/loginService');
 
 class AuthController {
     async registration(req, res, next) {
-
         const { name, password } = req.body;
 
         await registration.userRegistration(name, password);
@@ -13,7 +12,6 @@ class AuthController {
     }
 
     async loginService(req, res) {
-
         const { name, password } = req.body
 
         const token = await login.userLogin(name, password);

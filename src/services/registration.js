@@ -4,7 +4,6 @@ const { BadRequestError } = require('../errors');
 
 class Registration {
     userRegistration = async (name, password) => {
-
         const candidate = await usersRepository.findOneByName(name);
 
         if (candidate) {
@@ -12,9 +11,7 @@ class Registration {
         }
 
         const userRole = await rolesRepository.getByName("USER");
-
         const newUser = await usersRepository.create(name, password);
-
         await rolesRepository.addRoleToUser(newUser, userRole);
     }
 }

@@ -8,8 +8,6 @@ const userSchema = require('../schemes/userSchema')
 
 router.post('/registration', validation(userSchema, 'body'), requestWrap(controller.registration));
 
-//router.post('/login', validation(userSchema, 'body'), requestWrap(controller.login));
-
 router.post('/login', requestWrap(controller.login));
 
 router.all('/*', [notFoundMiddleware]);

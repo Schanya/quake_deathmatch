@@ -9,6 +9,7 @@ const validate = (schema, property) => {
             if (error) {
                 throw new UnprocessableEntityError(`${error.details[0].message}!`);
             }
+
             next();
         }
     }
