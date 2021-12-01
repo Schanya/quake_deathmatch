@@ -3,7 +3,7 @@ const usersRepository = require("../repositories/usersRepository");
 const bcrypt = require('bcrypt');
 const rolesRepository = require("../repositories/rolesRepository");
 
-class Login {
+class LoginService {
     userLogin = async (name, password) => {
 
         const user = await usersRepository.findOneByName(name);
@@ -14,9 +14,9 @@ class Login {
 
         }
 
-        const validPassword = bcrypt.compareSync(password, user.password);
+        const isPasswordValid = bcrypt.compareSync(password, user.password);
 
-        if (!validPassword) {
+        if (!isPasswordValid) {
 
             throw new BadRequestError("Введён не верный пароль");
 
@@ -29,4 +29,4 @@ class Login {
     }
 }
 
-module.exports = new Login();
+module.exports = new LoginService();
