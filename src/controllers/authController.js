@@ -1,6 +1,6 @@
 const registration = require('../services/registration');
 const Response = require('../helpers/response');
-const loginService = require('../services/loginService');
+const { StatusCodes } = require('http-status-codes');
 
 class AuthController {
     async registration(req, res, next) {
@@ -8,7 +8,7 @@ class AuthController {
 
         await registration.userRegistration(name, password);
 
-        res.status(200).json(new Response(`Пользователь с именем  ${name} был успешно зарегестрирован`));
+        res.status(StatusCodes.OK).json(new Response(`Пользователь с именем  ${name} был успешно зарегестрирован`));
     }
 
     async loginService(req, res) {
@@ -16,7 +16,7 @@ class AuthController {
 
         const token = await login.userLogin(name, password);
 
-        res.status(200).json({ token });
+        res.status(StatusCodes.OK).json({ token });
     }
 }
 
