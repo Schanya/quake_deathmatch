@@ -1,28 +1,28 @@
-const BadRequestError = require('../errors/badrequestError');
+const Forbidden = require("../errors/forbiddenError");
+const helpers = require("../helpers/checkRoles");
 const jwt = require('jsonwebtoken');
-const { secret } = require('../db/config/dbСonfig');
+const { secret } = require("../db/config/dbСonfig");
 
-const isAdmin = (req, res, next) => {
-    if (req.method === "OPTIONS") {
-        next();
-    }
+module.exports = (roles) => {
+    return (req, res, next) => {
 
-    try {
-        const token = req.headers.authorization.split(' ')[1];
+        const token = req.headers.authorization.split(' ')[1]
 
         if (!token) {
-            throw new BadRequestError('Пользователь не авторизован');
+            return new Forbidden('Пользователь не авторизован')
         }
 
-        const decodedData = jwt.verify(token, secret);
-        req.user = decodedData;
+        const { Roles: userRoles } = jwt.verify(token, secret);
+
+        const isAdmin = helpers.isAdmin(userRoles);
+
+        if (!isAdmin) {
+            next(
+                new Forbidden(
+                    'У вас недостаточно прав для выполнения этого действия'
+                )
+            );
+        }
         next();
-    } catch {
-        console.log(e);
-        //сделать 403
-        throw new BadRequestError('Пользователь не авторизован');
-
     }
-}
-
-module.exports = isAdmin;
+};

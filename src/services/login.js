@@ -21,7 +21,7 @@ class Login {
             throw new BadRequestError("Введён не верный пароль");
 
         }
-        const role = await rolesRepository.getByName(name);
+        const role = await rolesRepository.getAllByUserName(name);
 
         const token = usersRepository.generateAccessToken(user.id, role);
 

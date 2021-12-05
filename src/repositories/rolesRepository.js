@@ -2,8 +2,8 @@
 const db = require('../models');
 
 class Roles {
-    async getByName(name) {
-        const userRole = await db.Role.findOne({ where: { name } });
+    async getAllByUserName(name) {
+        const userRole = await db.Role.findAll({ where: { name } });
         return userRole;
     }
     async addRoleToUser(user, userRole) {

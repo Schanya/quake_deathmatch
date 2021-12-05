@@ -11,7 +11,7 @@ class Registration {
             throw new BadRequestError(`Пользователь с именем  ${name} уже существует`);
         }
 
-        const userRole = await rolesRepository.getByName("USER");
+        const userRole = await rolesRepository.getAllByUserName("USER");
 
         const newUser = await usersRepository.create(name, password);
 

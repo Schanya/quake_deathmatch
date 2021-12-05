@@ -11,7 +11,7 @@ router.post('/registration', validation(userSchema, 'body'), requestWrap(control
 
 router.post('/login', requestWrap(controller.login));
 
-router.get('/users', isAdmin, requestWrap(controller.getUsers));
+router.get('/users', isAdmin('USER'), requestWrap(controller.getUsers));
 
 router.all('/*', [notFoundMiddleware]);
 

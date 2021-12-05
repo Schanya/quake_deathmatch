@@ -20,7 +20,7 @@ class Users {
             id,
             Roles
         }
-        return jwt.sign(paylod, secret, { expiresIn: "24" });
+        return jwt.sign(paylod, secret, { expiresIn: 3600 });
     }
     async getAllUsers() {
         const users = await db.User.findAll();
