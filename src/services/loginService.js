@@ -13,7 +13,7 @@ class LoginService {
 
         const isPasswordValid = bcrypt.compareSync(password, user.password);
         if (!isPasswordValid) {
-            throw new BadRequestError("Введён не верный пароль");
+            throw new BadRequestError("Введён не верный логин и пароль");
         }
 
         const role = await rolesRepository.getByName(name);

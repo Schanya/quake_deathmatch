@@ -2,7 +2,7 @@ const rolesRepository = require('../repositories/rolesRepository')
 const usersRepository = require('../repositories/usersRepository')
 const { BadRequestError } = require('../errors');
 
-class Registration {
+class RegistrationService {
     userRegistration = async (name, password) => {
         const candidate = await usersRepository.findOneByName(name);
 
@@ -16,5 +16,5 @@ class Registration {
     }
 }
 
-module.exports = new Registration();
+module.exports = new RegistrationService();
 
