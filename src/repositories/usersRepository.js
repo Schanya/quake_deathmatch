@@ -7,12 +7,15 @@ const { secret } = require('../db/config/dbСonfig')
 class Users {
     async findOneByName(name) {
         const candidate = await db.User.findOne({ where: { name } })
+
         return candidate;
     }
     async create(name, password) {
         const hashPassword = bcrypt.hashSync(password, 7);
         const user = new db.User({ name, password: hashPassword });
+
         await user.save();
+
         return user;
     }
     async generateAccessToken(id, Roles) {
@@ -24,6 +27,7 @@ class Users {
     }
     async getAllUsers() {
         const users = await db.User.findAll();
+
         return users;
     }
 }
