@@ -2,13 +2,15 @@
 const db = require('../models');
 
 class Roles {
-    static async getByName(name) {
+    async getByName(name) {
         const userRole = await db.Role.findOne({ where: { name } });
+
         return userRole;
     }
-    static async addRoleToUser(user, userRole) {
+    async addRoleToUser(user, userRole) {
+
         await user.addRole(userRole);
     }
 }
 
-module.exports = Roles;
+module.exports = new Roles();

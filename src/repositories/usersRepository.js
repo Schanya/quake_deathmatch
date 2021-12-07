@@ -1,19 +1,32 @@
 // db???
 const db = require('../models');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const { secret } = require('../db/config/dbСonfig')
 
 class Users {
-    static async findOneByName(name) {
+    async findOneByName(name) {
         const candidate = await db.User.findOne({ where: { name } })
+
         return candidate;
     }
-    static async create(name, password) {
+    async create(name, password) {
         const hashPassword = bcrypt.hashSync(password, 7);
         const user = new db.User({ name, password: hashPassword });
+
         await user.save();
+
         return user;
+    }
+    async generateAccessToken(id, Roles) {
+        const paylod = {
+            id,
+            Roles
+        }
+
+        return jwt.sign(paylod, secret, { expiresIn: "24" });
     }
 }
 
-module.exports = Users;
+module.exports = new Users();
 

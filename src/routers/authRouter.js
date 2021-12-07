@@ -8,9 +8,10 @@ const userSchema = require('../schemes/userSchema')
 
 router.post('/registration', validation(userSchema, 'body'), requestWrap(controller.registration));
 
+router.post('/login', requestWrap(controller.login));
+
 router.all('/*', [notFoundMiddleware]);
 
-//router.post('/login', controller.login)
 //router.get('/users', controller.getUsers)
 
 module.exports = router;

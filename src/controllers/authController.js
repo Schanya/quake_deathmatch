@@ -1,42 +1,28 @@
-const registration = require('../services/registration');
+const registrationService = require('../services/registrationService');
 const Response = require('../helpers/response');
+const { StatusCodes } = require('http-status-codes');
+const loginService = require('../services/loginService');
 
 class AuthController {
     async registration(req, res, next) {
-
         const { name, password } = req.body;
 
-        await registration.userRegistration(name, password);
+        await registrationService.userRegistration(name, password);
 
-        res.status(200).json(new Response(`Пользователь с именем  ${name} был успешно зарегестрирован`));
+        res.status(StatusCodes.OK).json(new Response(`Пользователь с именем  ${name} был успешно зарегестрирован`));
+    }
+
+    async login(req, res) {
+        const { name, password } = req.body
+
+        const token = await loginService.userLogin(name, password);
+
+        res.status(StatusCodes.OK).json({ token });
     }
 }
+
 
 module.exports = new AuthController()
-
-/*
-
-async login(req, res) {
-        try {
-            const { name, password } = req.body
-            const user = await db.User.findOne({ name })
-            if (!user) {
-                return res.status(400).json({ message: `Пользователь ${name} не найден` })
-            }
-
-            const validPassword = bcrypt.compareSync(password, user.password);
-            if (!validPassword) {
-                return res.status(400).json({ massage: "Введён не верный пароль" })
-            }
-
-        } catch (e) {
-            console.log(e)
-            res.status(400).json({ message: 'Login error' })
-        }
-    }
-}
-
-
 
 /*
 
