@@ -1,7 +1,8 @@
+const UnauthenticatedError = require("../errors/unauthError");
 const Forbidden = require("../errors/forbiddenError");
-const helpers = require("../helpers/checkRoles");
 const jwt = require('jsonwebtoken');
 const { secret } = require("../db/config/dbСonfig");
+const { admin } = require("../helpers/constants");
 
 module.exports = (roles) => {
     return (req, res, next) => {
@@ -9,19 +10,21 @@ module.exports = (roles) => {
         const token = req.headers.authorization.split(' ')[1]
 
         if (!token) {
-            return new Forbidden('Пользователь не авторизован')
+            throw new UnauthenticatedError('Пользователь не авторизован')
         }
+
 
         const { Roles: userRoles } = jwt.verify(token, secret);
 
-        const isAdmin = helpers.isAdmin(userRoles);
+        let isAdmin = false;
+        userRoles.forEach(role => {
+            if (role.name === admin) {
+                isAdmin = true;
+            }
+        });
 
         if (!isAdmin) {
-            next(
-                new Forbidden(
-                    'У вас недостаточно прав для выполнения этого действия'
-                )
-            );
+            throw new Forbidden('У вас недостаточно прав для выполнения этого действия')
         }
         next();
     }

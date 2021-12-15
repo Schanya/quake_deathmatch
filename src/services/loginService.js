@@ -2,6 +2,7 @@ const { BadRequestError } = require("../errors");
 const usersRepository = require("../repositories/usersRepository");
 const bcrypt = require('bcrypt');
 const rolesRepository = require("../repositories/rolesRepository");
+const Token = require("../utils/jwt");
 
 class LoginService {
     userLogin = async (name, password) => {
@@ -17,7 +18,7 @@ class LoginService {
         }
 
         const role = await rolesRepository.getAllByUserName(name);
-        const token = usersRepository.generateAccessToken(user.id, role);
+        const token = Token.generateAccessToken(user.id, role);
 
         return token;
     }
