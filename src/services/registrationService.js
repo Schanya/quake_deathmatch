@@ -1,6 +1,7 @@
-const rolesRepository = require('../repositories/rolesRepository')
-const usersRepository = require('../repositories/usersRepository')
+const rolesRepository = require('../repositories/rolesRepository');
+const usersRepository = require('../repositories/usersRepository');
 const { BadRequestError } = require('../errors');
+const { USER: user } = require('../helpers/constants');
 
 class RegistrationService {
     userRegistration = async (name, password) => {
@@ -10,7 +11,7 @@ class RegistrationService {
             throw new BadRequestError(`Пользователь с именем  ${name} уже существует`);
         }
 
-        const userRole = await rolesRepository.getAllByUserName("USER");
+        const userRole = await rolesRepository.getAllByUserName(user);
 
         const newUser = await usersRepository.create(name, password);
         await rolesRepository.addRoleToUser(newUser, userRole);

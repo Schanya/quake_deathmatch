@@ -2,7 +2,7 @@ const UnauthenticatedError = require("../errors/unauthError");
 const Forbidden = require("../errors/forbiddenError");
 const jwt = require('jsonwebtoken');
 const { secret } = require("../db/config/dbСonfig");
-const { admin } = require("../helpers/constants");
+const { ADMIN: admin } = require("../helpers/constants");
 
 module.exports = (roles) => {
     return (req, res, next) => {

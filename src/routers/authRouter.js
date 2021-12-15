@@ -7,8 +7,8 @@ const validation = require('../middleware/validation');
 const userSchema = require('../schemes/userSchema');
 const isAdmin = require('../middleware/isAdmin');
 const isUser = require('../middleware/isUser');
-const { admin } = require('../helpers/constants');
-const { user } = require('../helpers/constants');
+const { ADMIN: admin } = require('../helpers/constants');
+const { USER: user } = require('../helpers/constants');
 
 router.post('/registration', validation(userSchema, 'body'), requestWrap(controller.registration));
 
