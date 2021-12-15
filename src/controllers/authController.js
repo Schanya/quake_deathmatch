@@ -1,4 +1,4 @@
-const getAllUsersService = require('../services/UsersService');
+const UsersService = require('../services/UsersService');
 const registrationService = require('../services/registrationService');
 const Response = require('../helpers/response');
 const { StatusCodes } = require('http-status-codes');
@@ -25,7 +25,7 @@ class AuthController {
     }
 
     async getUsers(req, res) {
-        const users = await getAllUsersService.getUsers();
+        const users = await UsersService.getUsers();
 
         res.json(users);
     }
