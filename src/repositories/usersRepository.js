@@ -30,6 +30,9 @@ class Users {
 
         return users;
     }
+    async deleteUser(id) {
+        await db.User.destroy({ where: { id } })
+    }
 }
 
 module.exports = new Users();

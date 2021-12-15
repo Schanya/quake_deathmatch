@@ -1,10 +1,10 @@
 const usersRepository = require('../repositories/usersRepository');
 
-class GetAllUsers {
+class UsersService {
     getUsers = async () => {
         const users = await usersRepository.getAllUsers();
         return users;
     }
 }
 
-module.exports = new GetAllUsers();
+module.exports = new UsersService();
