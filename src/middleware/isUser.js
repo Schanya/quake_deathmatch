@@ -1,7 +1,7 @@
 const Forbidden = require("../errors/forbiddenError");
-const helpers = require("../helpers/checkRoles");
 const jwt = require('jsonwebtoken');
 const { secret } = require("../db/config/dbСonfig");
+const { USER: user } = require("../helpers/constants");
 
 module.exports = (roles) => {
     return (req, res, next) => {
@@ -14,9 +14,14 @@ module.exports = (roles) => {
 
         const { Roles: userRoles } = jwt.verify(token, secret);
 
-        const isAdmin = helpers.isAdmin(userRoles);
+        let isUser = false;
+        userRoles.forEach(role => {
+            if (role.name === user) {
+                isUser = true;
+            }
+        });
 
-        if (isAdmin) {
+        if (isUser) {
             next(
                 new Forbidden(
                     'У вас недостаточно прав для выполнения этого действия'

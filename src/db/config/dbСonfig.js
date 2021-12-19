@@ -1,15 +1,15 @@
 module.exports = {
   host: process.env.MYSQL_DB_HOST || "localhost",
-  port: '3306',
-  user: "root",
-  password: "SCH08",
-  DB: "quake_db",
-  dialect: "mysql",
+  port: process.env.MYSQL_DB_PORT || '3306',
+  user: process.env.MYSQL_DB_USER || "root",
+  password: process.env.MYSQL_DB_PASSWORD || "SCH08",
+  DB: process.env.MYSQL_DB_NAME || "quake_db",
+  dialect: process.env.MYSQL_DB_DIALECT || "mysql",
   pool: {
     max: 5,
     min: 0,
     acquire: 30000,
     idle: 10000
   },
-  secret: "SECRET_KEY_RANDOM"
+  secret: process.env.MYSQL_DB_SECRET || "SECRET_KEY_RANDOM"
 };

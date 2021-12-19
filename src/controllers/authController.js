@@ -32,7 +32,7 @@ class AuthController {
 
     async deleteUser(req, res) {
         const token = req.headers.authorization.split(' ')[1]
-        //правильно ли здесь вытаскивать id  из токена?
+        //Куда вставить проверку, если токен не пришёл?
         const { id: userId } = jwt.verify(token, secret);
 
         await deleteService.deleteUser(userId);
