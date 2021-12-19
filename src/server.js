@@ -20,7 +20,7 @@ app.use(errorHandlerMiddleware);
 const main = async () => {
   await DbInitialize.initialize(app);
   app.listen(3000, () => {
-    console.log("Сервер ожидает подключения...");
+    console.log('The server is waiting for a connection ...');
   });
 }
 

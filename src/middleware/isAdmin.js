@@ -10,7 +10,7 @@ module.exports = (roles) => {
         const token = req.headers.authorization.split(' ')[1]
 
         if (!token) {
-            throw new UnauthenticatedError('Пользователь не авторизован')
+            throw new UnauthenticatedError('User not logged in')
         }
 
 
@@ -24,7 +24,7 @@ module.exports = (roles) => {
         });
 
         if (!isAdmin) {
-            throw new Forbidden('У вас недостаточно прав для выполнения этого действия')
+            throw new Forbidden('You do not have sufficient rights to perform this action')
         }
         next();
     }

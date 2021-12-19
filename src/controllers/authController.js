@@ -13,7 +13,7 @@ class AuthController {
 
         await registrationService.userRegistration(name, password);
 
-        res.status(StatusCodes.OK).json(new Response(`Пользователь с именем  ${name} был успешно зарегестрирован`));
+        res.status(StatusCodes.OK).json(new Response(`User $ {name} has been successfully registered`));
     }
 
     async login(req, res) {
@@ -37,7 +37,7 @@ class AuthController {
 
         await deleteService.deleteUser(userId);
 
-        res.status(StatusCodes.OK).json(new Response(`Ваш аккаунт был успешно удалён`));
+        res.status(StatusCodes.OK).json(new Response(`Your account has been successfully deleted`));
     }
 }
 

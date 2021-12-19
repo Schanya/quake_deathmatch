@@ -9,7 +9,7 @@ module.exports = (roles) => {
         const token = req.headers.authorization.split(' ')[1]
 
         if (!token) {
-            return new Forbidden('Пользователь не авторизован')
+            return new Forbidden('User not logged in')
         }
 
         const { Roles: userRoles } = jwt.verify(token, secret);
@@ -24,7 +24,7 @@ module.exports = (roles) => {
         if (isUser) {
             next(
                 new Forbidden(
-                    'У вас недостаточно прав для выполнения этого действия'
+                    'You do not have sufficient rights to perform this action'
                 )
             );
         }

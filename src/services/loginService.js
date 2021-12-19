@@ -9,12 +9,12 @@ class LoginService {
         const user = await usersRepository.findOneByName(name);
 
         if (!user) {
-            throw new BadRequestError("Введён не верный логин и пароль");
+            throw new BadRequestError('Invalid username and password ');
         }
 
         const isPasswordValid = bcrypt.compareSync(password, user.password);
         if (!isPasswordValid) {
-            throw new BadRequestError("Введён не верный логин и пароль");
+            throw new BadRequestError('Invalid username and password ');
         }
 
         const role = await rolesRepository.getAllByUserName(name);

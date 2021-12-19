@@ -8,7 +8,7 @@ class RegistrationService {
         const candidate = await usersRepository.findOneByName(name);
 
         if (candidate) {
-            throw new BadRequestError(`Пользователь с именем  ${name} уже существует`);
+            throw new BadRequestError(`User $ {name} already exists`);
         }
 
         const userRole = await rolesRepository.getAllByUserName(user);
