@@ -1,5 +1,5 @@
 module.exports = {
-  host: "localhost",
+  host: process.env.MYSQL_DB_HOST || "localhost",
   port: '3306',
   user: "root",
   password: "SCH08",
