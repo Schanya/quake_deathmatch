@@ -1,4 +1,5 @@
 const winston = require('winston');
+const { level } = require('../env');
 
 const logTransports = [
     new (winston.transports.Console)({
@@ -9,10 +10,9 @@ const logTransports = [
     }),
 ];
 
-const LOGLEVEL = (process.env.LOGLEVEL || 'debug').toLowerCase();
 const logger = winston.createLogger({
     transports: logTransports,
-    level: LOGLEVEL,
+    level: level,
 });
 
 module.exports = logger;

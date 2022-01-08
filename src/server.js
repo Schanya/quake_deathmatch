@@ -7,7 +7,7 @@ const errorHandlerMiddleware = require('./middleware/errorHandler');
 
 
 app.use(express.json());
-//роуты нельзя тут инит (вынести в роуты создать index.js и там их инит как и бд)
+
 app.use(router);
 
 app.logger = logger;
@@ -15,8 +15,6 @@ app.logger = logger;
 
 app.use(errorHandlerMiddleware);
 
-//initialize возвращает промис, поэтому можно использовать then
-//await не даёт использовать express
 const main = async () => {
   await DbInitialize.initialize(app);
   app.listen(3000, () => {
