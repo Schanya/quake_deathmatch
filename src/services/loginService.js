@@ -17,8 +17,10 @@ class LoginService {
             throw new BadRequestError('Invalid username and password ');
         }
 
-        const role = await rolesRepository.getAllByUserName(name);
-        const token = Token.generateAccessToken(user.id, role);
+        const id = user.id;
+        const roles = await rolesRepository.getRoleByUserId(id);
+
+        const token = Token.generateAccessToken(user.id, roles);
 
         return token;
     }

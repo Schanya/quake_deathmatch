@@ -1,7 +1,7 @@
 const rolesRepository = require('../repositories/rolesRepository');
 const usersRepository = require('../repositories/usersRepository');
 const { BadRequestError } = require('../errors');
-const { ADMIN: user } = require('../helpers/constants');
+const { USER: user } = require('../helpers/constants');
 
 class RegistrationService {
     userRegistration = async (name, password) => {
@@ -11,7 +11,7 @@ class RegistrationService {
             throw new BadRequestError(`User ${name} already exists`);
         }
 
-        const userRole = await rolesRepository.getAllByUserName(user);
+        const userRole = await rolesRepository.getAllByRoleName(user);
 
         const newUser = await usersRepository.create(name, password);
         await rolesRepository.addRoleToUser(newUser, userRole);

@@ -25,6 +25,11 @@ class Users {
     async deleteUser(id) {
         await db.User.destroy({ where: { id } })
     }
+    async findById(id) {
+        const user = await db.User.findOne({ where: { id } });
+
+        return user;
+    }
 }
 
 module.exports = new Users();
