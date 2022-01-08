@@ -4,8 +4,8 @@ const Response = require('../helpers/response');
 const { StatusCodes } = require('http-status-codes');
 const loginService = require('../services/loginService');
 const deleteService = require('../services/deleteService');
-const { secret } = require('../db/config/dbСonfig');
-const jwt = require('jsonwebtoken');
+
+
 
 class AuthController {
     async registration(req, res, next) {
@@ -13,7 +13,7 @@ class AuthController {
 
         await registrationService.userRegistration(name, password);
 
-        res.status(StatusCodes.OK).json(new Response(`User $ {name} has been successfully registered`));
+        res.status(StatusCodes.OK).json(new Response(`User ${name} has been successfully registered`));
     }
 
     async login(req, res) {
@@ -31,10 +31,7 @@ class AuthController {
     }
 
     async deleteUser(req, res) {
-        const token = req.headers.authorization.split(' ')[1]
-        //Куда вставить проверку, если токен не пришёл?
-        const { id: userId } = jwt.verify(token, secret);
-
+        const userId = req.user.id;
         await deleteService.deleteUser(userId);
 
         res.status(StatusCodes.OK).json(new Response(`Your account has been successfully deleted`));

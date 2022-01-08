@@ -5,20 +5,11 @@ const { USER: user } = require("../helpers/constants");
 
 module.exports = (roles) => {
     return (req, res, next) => {
-
-        const token = req.headers.authorization.split(' ')[1]
-
-        if (!token) {
-            return new Forbidden('User not logged in')
-        }
-
-        const { Roles: userRoles } = jwt.verify(token, secret);
-
+        const userRoles = req.user.Roles;
         let isUser = false;
-        userRoles.forEach(role => {
-            if (role.name === user) {
-                isUser = true;
-            }
+
+        userRoles.some(role => {
+            return role.name === user
         });
 
         if (isUser) {
