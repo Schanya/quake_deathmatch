@@ -23,8 +23,13 @@ db.sequelize = sequelize;
 //db для создания абстракции над sequqlize 
 db.User = require("./user")(sequelize);
 db.Role = require("./role")(sequelize);
+db.Location = require("./location")(sequelize);
+db.UserInfo = require("./userInfo")(sequelize);
+db.GameSession = require("./gmeSession")(sequelize);
 
 db.User.associate(db);
 db.Role.associate(db);
+db.GameSession.associate(db);
+db.Location.associate(db);
 
 module.exports = db;
