@@ -14,6 +14,14 @@ class InitData {
             await db.Role.create({ name: "ADMIN" });
         }
     }
+    initAdmin = async () => {
+        const admin = await db.User.findOne({ where: { name: "admin" } });
+
+        if (!admin) {
+            const newAdmin = await db.User.create({ name: "admin", password: "admin" });
+            await newAdmin.addRole("ADMIN");
+        }
+    }
 }
 
 module.exports = new InitData();

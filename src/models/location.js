@@ -20,6 +20,7 @@ module.exports = (sequelize) => {
         },
         max_users: {
             type: DataTypes.INTEGER,
+            default: 10,
         }
     }, {
         sequelize,

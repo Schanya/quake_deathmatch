@@ -9,6 +9,7 @@ class DbInitialize {
             await db.sequelize.sync();
             app.logger.info('Sequelize synced');
             await InitData.initRoles(db);
+            await InitData.initAdmin(db);
         } catch (error) {
             app.logger.error('Sequelize sync failed: ', error.messag);
         };

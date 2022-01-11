@@ -12,7 +12,7 @@ class UserController {
     }
     async deleteUser(req, res) {
         const userId = req.user.id;
-        await deleteService.deleteUser(userId);
+        await UsersService.deleteUser(userId);
 
         res.status(StatusCodes.OK).json(new Response(`Your account has been successfully deleted`));
     }
