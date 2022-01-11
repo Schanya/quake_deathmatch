@@ -30,19 +30,12 @@ module.exports = (sequelize) => {
             as: "role",
             foreignKey: "user_id",
         });
-    }
-
-    User.associate = models => {
         User.belongsToMany(models.GameSession, {
             through: "user_sessions",
             as: "game_session",
             foreignKey: "user_id",
         });
-    }
-
-    User.associate = models => {
         User.hasOne(models.UserInfo);
     }
-
     return User;
 }
