@@ -1,4 +1,5 @@
 const db = require('../models');
+const bcrypt = require('bcrypt');
 
 class InitData {
     initRoles = async () => {
@@ -18,8 +19,11 @@ class InitData {
         const admin = await db.User.findOne({ where: { name: "admin" } });
 
         if (!admin) {
-            const newAdmin = await db.User.create({ name: "admin", password: "admin" });
-            await newAdmin.addRole("ADMIN");
+            const password = "admin";
+            const hashPassword = bcrypt.hashSync(password, 7);
+            const newAdmin = await db.User.create({ name: "admin", password: hashPassword });
+            const role = await db.Role.findOne({ where: { name: "ADMIN" } })
+            await newAdmin.addRole(role);
         }
     }
 }

@@ -12,7 +12,7 @@ const parseToken = require('../middleware/parseToken');
 
 router.use('/auth', authRouter);
 router.use('/user', requestWrap(parseToken()), userRouter);
-router.use('/location', locationRouter);
+router.use('/location', requestWrap(parseToken()), locationRouter);
 router.use('/*', [notFoundMiddleware]);
 router.use(errorHandlerMiddleware);
 

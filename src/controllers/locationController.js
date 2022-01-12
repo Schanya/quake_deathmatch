@@ -5,9 +5,9 @@ const LocationsService = require('../services/locationService');
 
 class LocationController {
     async addLocation(req, res) {
-        const { name, description, poster, file, maxUsers } = req.body;
+        const { name, description, poster, file, max_users } = req.body;
 
-        await LocationsService.addLocation(name, description, poster, file, maxUsers);
+        await LocationsService.addLocation(name, description, poster, file, max_users);
 
         res.status(StatusCodes.OK).json(new Response(`Location ${name} has been successfully created`));
     }
