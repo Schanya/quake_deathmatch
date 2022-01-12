@@ -9,6 +9,11 @@ class UsersService {
         await usersRepository.deleteUser(userId)
 
     }
+    getUserById = async (userId) => {
+        const user = await usersRepository.findById(userId);
+
+        return user;
+    }
 }
 
 module.exports = new UsersService();

@@ -33,7 +33,13 @@ module.exports = (sequelize) => {
     });
 
     Location.associate = models => {
-        Location.hasMany(models.GameSession);
+        Location.hasMany(models.GameSession,
+            {
+                foreignKey: {
+                    name: 'location_id',
+                    //allowNull: false
+                }
+            });
     };
 
     return Location;
