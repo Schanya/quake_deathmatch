@@ -11,12 +11,12 @@ class LocationController {
 
         res.status(StatusCodes.OK).json(new Response(`Location ${name} has been successfully created`));
     }
-    // async deleteLocation(req, res) {
-    //     const locationId = req.user.id;
-    //     await deleteService.deleteUser(userId);
+    async deleteLocation(req, res) {
+        const { name } = req.body;
+        await LocationsService.deleteLocation(name);
 
-    //     res.status(StatusCodes.OK).json(new Response(`Your account has been successfully deleted`));
-    // }
+        res.status(StatusCodes.OK).json(new Response(`Your location has been successfully deleted`));
+    }
 }
 
 module.exports = new LocationController()

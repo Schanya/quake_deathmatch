@@ -11,6 +11,6 @@ const { ADMIN: admin } = require('../helpers/constants');
 
 router.get('/create', isAdmin(admin), requestWrap(controller.addLocation));
 
-//router.post('/delete', isUser(user), requestWrap(controller.deleteUser));
+router.post('/delete', isAdmin(admin), requestWrap(controller.deleteLocation));
 
 module.exports = router;
