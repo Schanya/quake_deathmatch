@@ -16,4 +16,6 @@ router.get('/users', isAdmin(admin), requestWrap(controller.getUsers));
 
 router.post('/delete', isUser(user), requestWrap(controller.deleteUser));
 
+router.get('/connecting', requestWrap(controller.connectingToGameSession));
+
 module.exports = router;

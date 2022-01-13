@@ -1,11 +1,11 @@
 const db = require('../models');
 
 class GameSessions {
-    // async getLocation(name) {
-    //     const newLocation = await db.Location.findOne({ where: { name } });
+    async getGameSession(name) {
+        const newGameSession = await db.GameSession.findOne({ where: { name } });
 
-    //     return newLocation;
-    // }
+        return newGameSession;
+    }
     async createGameSession(name, max_users, is_active) {
         const gameSession = new db.GameSession({ name, max_users, is_active });
 
@@ -18,6 +18,11 @@ class GameSessions {
     }
     async addGameSessionToLocation(gameSession, location) {
         await location.addGame_session(gameSession);
+    }
+    async getUsersFromGameSession(gameSession) {
+        const users = await gameSession.countUser();
+
+        return users;
     }
     // async deleteLocation(id) {
     //     await db.Location.destroy({ where: { id } })
