@@ -24,6 +24,19 @@ class GameSessions {
 
         return users;
     }
+    async getGameSessionByUser(user) {
+        const gameSessesion = await user.getGame_session();
+
+        return gameSessesion;
+    }
+    async disconnecting(user, gameSession) {
+        user.removeGame_session(gameSession);
+    }
+    async countSessionByUser(user) {
+        const count = await user.countGame_session();
+
+        return count;
+    }
     // async deleteLocation(id) {
     //     await db.Location.destroy({ where: { id } })
     // }

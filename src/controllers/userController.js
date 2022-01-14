@@ -3,6 +3,7 @@ const { StatusCodes } = require('http-status-codes');
 
 const UsersService = require('../services/usersService');
 const deleteService = require('../services/deleteService');
+const usersService = require('../services/usersService');
 
 class UserController {
     async getUsers(req, res) {
@@ -22,6 +23,12 @@ class UserController {
         await UsersService.connectingToSession(sessionName, userId);
 
         res.status(StatusCodes.OK).json(new Response(`You have successfully connected to the game`));
+    }
+    async disconnectingFromGameSession(req, res) {
+        const userId = req.user.id;
+        await usersService.disconnectingFromGameSession(userId);
+
+        res.status(StatusCodes.OK).json(new Response(`You have successfully disconnected to the game`));
     }
 }
 

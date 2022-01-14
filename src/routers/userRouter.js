@@ -18,4 +18,6 @@ router.post('/delete', isUser(user), requestWrap(controller.deleteUser));
 
 router.get('/connecting', requestWrap(controller.connectingToGameSession));
 
+router.post('/disconnecting', requestWrap(controller.disconnectingFromGameSession));
+
 module.exports = router;
