@@ -12,6 +12,11 @@ class GameSessionController {
 
         res.status(StatusCodes.OK).json(new Response(`Game session ${name} has been successfully created`));
     }
+    async getGameSession(req, res) {
+        const gameSessions = await GameSessionsService.getGameSessions();
+
+        res.json(gameSessions);
+    }
     // async deleteLocation(req, res) {
     //     const { name } = req.body;
     //     await LocationsService.deleteLocation(name);

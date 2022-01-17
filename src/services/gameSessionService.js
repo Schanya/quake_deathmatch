@@ -3,11 +3,11 @@ const locationService = require('./locationService');
 const usersService = require('./usersService');
 
 class GameSessionsService {
-    // getLocation = async (name) => {
-    //     const newLocation = await locationsRepository.getLocation(name);
+    getGameSessions = async () => {
+        const gameSessions = await gameSessionsRepository.getGameSessions();
 
-    //     return newLocation;
-    // }
+        return gameSessions;
+    }
 
     addGameSession = async (name, max_users, userId, nameLocation) => {
         const location = await locationService.getLocation(nameLocation);

@@ -1,11 +1,11 @@
 const db = require('../models');
 
 class GameSessions {
-    // async getLocation(name) {
-    //     const newLocation = await db.Location.findOne({ where: { name } });
+    async getGameSessions(name) {
+        const gameSessions = await db.GameSession.findAll();
 
-    //     return newLocation;
-    // }
+        return gameSessions;
+    }
     async createGameSession(name, max_users, is_active) {
         const gameSession = new db.GameSession({ name, max_users, is_active });
 
