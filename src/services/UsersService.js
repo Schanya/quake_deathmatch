@@ -17,6 +17,7 @@ class UsersService {
         return user;
     }
     connectingToSession = async (sessionName, userId) => {
+        //Наверное стоит передавать не название сессии, а id
         const gameSession = await gameSessionRepository.getGameSessionByName(sessionName);
 
         if (!gameSession) {

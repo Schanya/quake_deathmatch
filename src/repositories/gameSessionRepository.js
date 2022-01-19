@@ -2,7 +2,7 @@ const db = require('../models');
 //const Location = require('../models/location');
 
 class GameSessions {
-    async getGameSessions(name) {
+    async getGameSessions() {
         const gameSessions = await db.GameSession.findAll();
 
         return gameSessions;
@@ -27,6 +27,7 @@ class GameSessions {
     async getGameSession(id) {
         const gameSession = await db.GameSession.findAll({
             //Убрать из вывода user_sessions
+            where: { id },
             include: [
                 {
                     model: db.Location,

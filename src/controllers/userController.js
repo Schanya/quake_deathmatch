@@ -2,7 +2,6 @@ const Response = require('../helpers/response');
 const { StatusCodes } = require('http-status-codes');
 
 const UsersService = require('../services/usersService');
-const deleteService = require('../services/deleteService');
 const usersService = require('../services/usersService');
 
 class UserController {

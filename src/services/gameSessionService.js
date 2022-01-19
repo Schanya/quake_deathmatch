@@ -13,8 +13,8 @@ class GameSessionsService {
 
         return gameSession;
     }
-    getDetailedInformation = async (name) => {
-        const gameSession = await gameSessionsRepository.getGameSession(name);
+    getDetailedInformation = async (id) => {
+        const gameSession = await gameSessionsRepository.getGameSession(id);
 
         return gameSession;
     }
