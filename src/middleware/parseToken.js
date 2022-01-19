@@ -5,11 +5,13 @@ const usersRepository = require('../repositories/usersRepository');
 
 const parseToken = () => {
     return async (req, res, next) => {
-        const token = req.headers.authorization.split(' ')[1]
+        const newToken = req.headers.authorization;
 
-        if (!token) {
+        if (!newToken) {
             throw new Forbidden('User not logged in');
         }
+
+        const token = newToken.split(' ')[1]
 
         const { id: userId, Roles: userRoles } = jwt.verify(token, secret);
 

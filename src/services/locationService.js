@@ -8,7 +8,14 @@ class LocationsService {
 
         return newLocation;
     }
+    getLocationById = async (id) => {
+        const location = await locationsRepository.getLocationById(id);
 
+        return location;
+    }
+    updateLocation = async (id, locationData) => {
+        return await locationsRepository.updateLocation(id, locationData);
+    }
     addLocation = async (name, description, poster, file, max_users) => {
         await locationsRepository.createLocation(name, description, poster, file, max_users);
     }
