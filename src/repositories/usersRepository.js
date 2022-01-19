@@ -16,7 +16,6 @@ class Users {
 
         return user;
     }
-
     async getAllUsers() {
         const users = await db.User.findAll();
 

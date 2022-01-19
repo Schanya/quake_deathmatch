@@ -1,8 +1,8 @@
 const db = require('../models');
 
 class Locations {
-    async getLocation(name) {
-        const newLocation = await db.Location.findOne({ where: { name } });
+    async getLocation(name, transaction) {
+        const newLocation = await db.Location.findOne({ where: { name } }, { transaction });
 
         return newLocation;
     }
@@ -11,8 +11,8 @@ class Locations {
 
         await location.save();
     }
-    async deleteLocation(id) {
-        await db.Location.destroy({ where: { id } })
+    async deleteLocation(id, transaction) {
+        await db.Location.destroy({ where: { id } }, { transaction })
     }
 }
 

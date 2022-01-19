@@ -7,7 +7,8 @@ module.exports = (sequelize) => {
     GameSession.init({
         name: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            unique: true,
         },
         max_users: {
             type: DataTypes.STRING,
