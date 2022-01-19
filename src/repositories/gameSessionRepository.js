@@ -1,4 +1,3 @@
-const Location = require('../models/location');
 const db = require('../models');
 //const Location = require('../models/location');
 
@@ -8,18 +7,22 @@ class GameSessions {
 
         return gameSessions;
     }
+    async getGameSessionByName(name) {
+        const gameSessesion = await db.GameSession.findOne({ where: { name } });
+
+        return gameSessesion;
+    }
+    async getGameSessionById(id) {
+        const gameSessesion = await db.GameSession.findOne({ where: { id } });
+
+        return gameSessesion;
+    }
     async createGameSession(name, max_users, is_active) {
         const gameSession = new db.GameSession({ name, max_users, is_active });
 
         await gameSession.save();
 
         return gameSession;
-    }
-    async addUserToGameSession(gameSession, user) {
-        await gameSession.addUser(user);
-    }
-    async addGameSessionToLocation(gameSession, location) {
-        await location.addGame_session(gameSession);
     }
     async getGameSession(id) {
         const gameSession = await db.GameSession.findAll({
@@ -45,12 +48,23 @@ class GameSessions {
 
         return gameSession;
     }
+    async addUserToGameSession(gameSession, user) {
+        await gameSession.addUser(user);
+    }
+    async addGameSessionToLocation(gameSession, location) {
+        await location.addGame_session(gameSession);
+    }
     async getLocation(gameSession) {
         const location = await gameSession.getLocation();
 
         return location;
     }
-    async getUsersFromGameSession(gameSession) {
+    async getUsersByGameSession(gameSessesion) {
+        const users = await gameSessesion.getUser({ attributes: ["id", "name"] });
+
+        return users;
+    }
+    async countUsersFromGameSession(gameSession) {
         const users = await gameSession.countUser();
 
         return users;

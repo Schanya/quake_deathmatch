@@ -23,6 +23,12 @@ class GameSessionController {
 
         res.json(gameSession);
     }
+    async getUsersByGameSession(req, res) {
+        const { id } = req.body;
+        const users = await GameSessionsService.getUsersByGameSession(id);
+
+        res.json(users);
+    }
     // async deleteLocation(req, res) {
     //     const { name } = req.body;
     //     await LocationsService.deleteLocation(name);

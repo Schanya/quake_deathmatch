@@ -1,5 +1,4 @@
 const { NotFoundError } = require('../errors');
-const { getGameSession } = require('../repositories/gameSessionRepository');
 const gameSessionRepository = require('../repositories/gameSessionRepository');
 const usersRepository = require('../repositories/usersRepository');
 
@@ -18,14 +17,14 @@ class UsersService {
         return user;
     }
     connectingToSession = async (sessionName, userId) => {
-        const gameSession = await gameSessionRepository.getGameSession(sessionName);
+        const gameSession = await gameSessionRepository.getGameSessionByName(sessionName);
 
         if (!gameSession) {
             throw new NotFoundError(`Game session ${gameSession.name} not exist`);
         }
         //добавить проверку, если игрок уже подключён к какой-то игре
         const user = await usersRepository.findById(userId);
-        const users = await gameSessionRepository.getUsersFromGameSession(gameSession);//переименовать в count
+        const users = await gameSessionRepository.countUsersFromGameSession(gameSession);//переименовать в count
         if (gameSession.max_users === users) {
             throw new NotFoundError(`The maximum number of players in the game`);
         }
