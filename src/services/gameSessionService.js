@@ -8,7 +8,9 @@ class GameSessionsService {
 
         return gameSessions;
     }
-
+    getGameSession = async () => {
+        const gameSession = await gameSessionsRepository.getGameSession();
+    }
     addGameSession = async (name, max_users, userId, nameLocation) => {
         const location = await locationService.getLocation(nameLocation);
         const is_active = true;
@@ -18,6 +20,11 @@ class GameSessionsService {
         await gameSessionsRepository.addUserToGameSession(newGameSession, user);
 
         await gameSessionsRepository.addGameSessionToLocation(newGameSession, location);
+    }
+    getDetailedInformation = async (name) => {
+        const gameSession = await gameSessionsRepository.getGameSession(name);
+
+        return gameSession;
     }
     // deleteLocation = async (locationName) => {
     //     const location = await locationsRepository.getLocation(locationName);

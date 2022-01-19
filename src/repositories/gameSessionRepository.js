@@ -1,4 +1,6 @@
+const Location = require('../models/location');
 const db = require('../models');
+//const Location = require('../models/location');
 
 class GameSessions {
     async getGameSessions(name) {
@@ -18,6 +20,35 @@ class GameSessions {
     }
     async addGameSessionToLocation(gameSession, location) {
         await location.addGame_session(gameSession);
+    }
+    async getGameSession(id) {
+        const gameSession = await db.GameSession.findAll({
+            //Убрать из вывода user_sessions
+            include: [
+                {
+                    model: db.Location,
+                    attributes: ["id", "name", "description", "poster", "file", "max_users"],
+                },
+                {
+                    model: db.User,
+                    as: "user",
+                    attributes: ["id", "name"],
+                    include: {
+                        model: db.UserInfo,
+                        attributes: ["id", "first_name", "last_name", "avatar"],
+                    },
+
+                }
+            ],
+            attributes: ["id", "name", "max_users"]
+        });
+
+        return gameSession;
+    }
+    async getLocation(gameSession) {
+        const location = await gameSession.getLocation();
+
+        return location;
     }
     // async deleteLocation(id) {
     //     await db.Location.destroy({ where: { id } })

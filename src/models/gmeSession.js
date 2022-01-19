@@ -32,6 +32,11 @@ module.exports = (sequelize) => {
             as: "user",
             foreignKey: "game_session_id",
         });
+        GameSession.belongsTo(models.Location, {
+            foreignKey: {
+                name: 'location_id'
+            }
+        })
     }
 
     return GameSession;

@@ -8,6 +8,10 @@ const requestWrap = require('../middleware/requestWrap');
 
 router.get('/create', requestWrap(controller.addGameSession));
 
+router.get('/list', requestWrap(controller.getGameSessions));
+
+router.get('/detailedInformation', requestWrap(controller.getDetailedInformation));
+
 //router.post('/delete', isAdmin(admin), requestWrap(controller.deleteLocation));
 
 module.exports = router;
