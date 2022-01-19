@@ -18,7 +18,7 @@ class UsersService {
         return user;
     }
     connectingToSession = async (sessionName, userId) => {
-        const gameSession = await gameSessionRepository.getGameSession(sessionName);
+        const gameSession = await gameSessionRepository.getGameSessionByName(sessionName);
 
         if (!gameSession) {
             throw new NotFoundError(`Game session ${gameSession.name} not exist`);
@@ -37,6 +37,7 @@ class UsersService {
         }
     }
     disconnectingFromGameSession = async (userId) => {
+        //Если последний человек вышел, сделать сессию неактивной
         const user = await usersRepository.findById(userId);
 
         const gameSession = await gameSessionRepository.getGameSessionByUser(user);

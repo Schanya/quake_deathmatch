@@ -8,6 +8,11 @@ class GameSessions {
 
         return gameSessions;
     }
+    async getGameSessionByName(name) {
+        const gameSessesion = await db.GameSession.findOne({ where: { name } });
+
+        return gameSessesion;
+    }
     async createGameSession(name, max_users, is_active) {
         const gameSession = new db.GameSession({ name, max_users, is_active });
 
