@@ -1,8 +1,6 @@
-const dotenv = require('dotenv');
 const path = require('path');
 const multer = require('multer');
-
-dotenv.config();
+const { imageDir, fileDir, maxSize, numberOfFiles } = require('../env').multer
 
 getFileType = (mimetype) => {
     switch (mimetype) {
@@ -29,12 +27,6 @@ getSubPathName = (baseUrl) => {
 }
 
 module.exports = {
-    app: {
-        port: parseInt(process.env.APP_PORT, 10),
-
-        resDir: process.env.RESOURCE_DIR
-    },
-
     storage: multer.diskStorage(
         {
             destination: function (req, file, cb) {
@@ -42,27 +34,24 @@ module.exports = {
                 if (getFileType(file.mimetype) === "image") {
                     const subPath = getSubPathName(baseUrl);
 
-                    const imagePath = path.join(process.env.IMAGE_DIR, subPath);
+                    const imagePath = path.join(imageDir, subPath);
                     cb(null, imagePath);
 
                 } else if (getFileType(file.mimetype) === "document") {
                     const subPath = getSubPathName(baseUrl);
 
-                    const documentPath = path.join(process.env.FILE_DIR, subPath);
+                    const documentPath = path.join(fileDir, subPath);
+                    file.destination = documentPath;
                     cb(null, documentPath);
                 }
 
             },
 
             filename: function (req, file, cb) {
-
                 const splittedName = file.originalname.split(".");
 
                 const ext = splittedName[splittedName.length - 1];
-
-                const fileType = getFileType(file.mimetype);
-
-                const fileName = req.params.id + fileType + "-" + Date.now() + "." + ext;
+                const fileName = Date.now() + "." + ext;
 
                 file.originalname = fileName;
 
@@ -85,11 +74,8 @@ module.exports = {
     },
 
     limits: {
-
-        fileSize: 2097152,//process.env.MAX_IMG_SIZE,
-
-        files: 1
-
+        fileSize: maxSize,
+        files: numberOfFiles
     }
 
 };

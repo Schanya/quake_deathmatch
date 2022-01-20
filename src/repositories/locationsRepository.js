@@ -12,7 +12,9 @@ class Locations {
         return location;
     }
     async updateLocation(id, locationData) {
-        return await db.Location.update(locationData, { where: { id } });
+        const newLocation = await db.Location.update(locationData, { where: { id } });
+
+        return newLocation;
     }
     async createLocation(name, description, poster, file, max_users) {
         const location = new db.Location({ name, description, poster, file, max_users });

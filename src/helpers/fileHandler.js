@@ -1,40 +1,36 @@
 const fs = require('fs');
-const dir = require("../loader/multer").app.resDir;
-
 
 class FileHandler {
 
-    get(fileName, res, next) {
-
+    get(file, res, next) {
         try {
-
+            const dir = file.destination;
+            const fileName = file.originalname;
             const readStream = fs.createReadStream(`${dir}/${fileName}`);
-
             readStream.on('open', () => {
 
                 readStream.pipe(res);
 
             });
-
             readStream.on('error', (err) => {
 
                 next(err);
 
             });
-
         } catch (err) {
 
             throw err;
-
         }
     }
 
-    delete(fileName) {
+    delete(file, fileName) {
+        const dir = file.destination
 
         if (fs.existsSync(`${dir}/${fileName}`)) {
 
             fs.unlink(`${dir}/${fileName}`, (err) => {
                 if (err) {
+
                     throw err;
                 }
             })
