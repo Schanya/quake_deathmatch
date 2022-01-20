@@ -16,8 +16,15 @@ class Users {
 
         return user;
     }
-    async getAllUsers() {
-        const users = await db.User.findAll();
+    async getAllUsers({ limit, offset }) {
+        const users = await db.User.findAll({
+            limit, offset,
+            include: [{
+                model: db.UserInfo,
+                attributes: ["id", "first_name", "last_name", "avatar"]
+            }],
+            attributes: ["id", "name"]
+        });
 
         return users;
     }

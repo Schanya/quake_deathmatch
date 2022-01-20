@@ -13,4 +13,6 @@ router.get('/create', isAdmin(admin), requestWrap(controller.addLocation));
 
 router.post('/delete', isAdmin(admin), requestWrap(controller.deleteLocation));
 
+router.get('/list', requestWrap(controller.getLocations));
+
 module.exports = router;
