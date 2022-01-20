@@ -1,7 +1,8 @@
-const rolesRepository = require('../repositories/rolesRepository');
-const usersRepository = require('../repositories/usersRepository');
 const { BadRequestError } = require('../errors');
 const { USER: user } = require('../helpers/constants');
+
+const rolesRepository = require('../repositories/rolesRepository');
+const usersRepository = require('../repositories/usersRepository');
 
 class RegistrationService {
     userRegistration = async (name, password) => {

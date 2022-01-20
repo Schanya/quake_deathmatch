@@ -6,6 +6,14 @@ class Locations {
 
         return newLocation;
     }
+    async getLocations({ ofset, limit }) {
+        const locations = await db.Location.findAll({
+            ofset, limit,
+            attributes: ["id", "name", "description", "poster", "file", "max_users"]
+        })
+
+        return locations;
+    }
     async createLocation(name, description, poster, file, max_users) {
         const location = new db.Location({ name, description, poster, file, max_users });
 
