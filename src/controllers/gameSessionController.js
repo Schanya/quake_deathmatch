@@ -15,19 +15,19 @@ class GameSessionController {
     async getGameSessions(req, res) {
         const gameSessions = await gameSessionsService.getGameSessions();
 
-        res.json(gameSessions);
+        res.status(StatusCodes.OK).json(gameSessions);
     }
     async getDetailedInformation(req, res) {
         const { id } = req.body;
         const gameSession = await gameSessionsService.getDetailedInformation(id);
 
-        res.json(gameSession);
+        res.status(StatusCodes.OK).json(gameSession);
     }
     async getUsersByGameSession(req, res) {
-        const { id } = req.body;
-        const users = await gameSessionsService.getUsersByGameSession(id);
+        const sessionId = req.params.id;
+        const users = await gameSessionsService.getUsersByGameSession(sessionId);
 
-        res.json(users);
+        res.status(StatusCodes.OK).json(users);
     }
     // async deleteLocation(req, res) {
     //     const { name } = req.body;

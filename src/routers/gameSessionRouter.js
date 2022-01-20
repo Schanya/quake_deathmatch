@@ -12,7 +12,7 @@ router.get('/list', requestWrap(controller.getGameSessions));
 
 router.get('/detailedInformation', requestWrap(controller.getDetailedInformation));
 
-router.get('/users', requestWrap(controller.getUsersByGameSession));
+router.get('/:id/users', requestWrap(controller.getUsersByGameSession));
 
 //router.post('/delete', isAdmin(admin), requestWrap(controller.deleteLocation));
 
