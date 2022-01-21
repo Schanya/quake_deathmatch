@@ -5,8 +5,11 @@ const controller = require('../controllers/gameSessionController')
 
 //может можно вынести в routing этот мидл
 const requestWrap = require('../middleware/requestWrap');
+const validation = require('../middleware/validation');
 
-router.get('/create', requestWrap(controller.addGameSession));
+const gameSessionSchema = require('../schemes/gameSessionSchema');
+
+router.post('/create', validation(gameSessionSchema, 'body'), requestWrap(controller.addGameSession));
 
 router.get('/list', requestWrap(controller.getGameSessions));
 
