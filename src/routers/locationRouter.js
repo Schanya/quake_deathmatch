@@ -15,4 +15,6 @@ router.post('/create', isAdmin(admin), validation(locationSchema, 'body'), reque
 
 router.delete('/delete', isAdmin(admin), requestWrap(controller.deleteLocation));
 
+router.get('/list', requestWrap(controller.getLocations));
+
 module.exports = router;

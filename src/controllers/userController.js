@@ -5,7 +5,8 @@ const usersService = require('../services/usersService');
 
 class UserController {
     async getUsers(req, res) {
-        const users = await usersService.getUsers();
+        const { page, amount } = req.query;
+        const users = await usersService.getUsers({ page, amount });
 
         res.status(StatusCodes.OK).json(users);
     }

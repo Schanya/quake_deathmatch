@@ -1,5 +1,7 @@
 const Delete = require('../errors/deleteError');
 const { sequelize } = require('../models');
+const pagination = require('../helpers/pagination');
+
 const locationsRepository = require('../repositories/locationsRepository');
 
 class LocationsService {
@@ -8,7 +10,13 @@ class LocationsService {
 
         return newLocation;
     }
+    getLocations = async ({ page, amount }) => {
+        const options = pagination({ page, amount });
 
+        const locations = await locationsRepository.getLocations(options);
+
+        return locations;
+    }
     addLocation = async (name, description, poster, file, max_users) => {
         await locationsRepository.createLocation(name, description, poster, file, max_users);
     }

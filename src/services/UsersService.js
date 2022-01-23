@@ -1,10 +1,13 @@
 const { NotFoundError } = require('../errors');
+const pagination = require('../helpers/pagination');
+
 const gameSessionRepository = require('../repositories/gameSessionRepository');
 const usersRepository = require('../repositories/usersRepository');
 
 class UsersService {
-    getUsers = async () => {
-        const users = await usersRepository.getAllUsers();
+    getUsers = async ({ page, amount }) => {
+        const options = pagination({ page, amount });
+        const users = await usersRepository.getAllUsers(options);
         return users;
     }
     deleteUser = async (userId) => {

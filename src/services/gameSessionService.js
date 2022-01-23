@@ -1,10 +1,15 @@
+const pagination = require('../helpers/pagination');
+
 const gameSessionsRepository = require('../repositories/gameSessionRepository');
+
 const locationService = require('./locationService');
 const usersService = require('./usersService');
 
+
 class GameSessionsService {
-    getGameSessions = async () => {
-        const gameSessions = await gameSessionsRepository.getGameSessions();
+    getGameSessions = async ({ page, amount }) => {
+        const options = pagination({ page, amount });
+        const gameSessions = await gameSessionsRepository.getGameSessions(options);
 
         return gameSessions;
     }

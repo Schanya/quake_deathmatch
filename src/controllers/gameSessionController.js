@@ -13,7 +13,8 @@ class GameSessionController {
         res.status(StatusCodes.OK).json(new Response(`Game session ${name} has been successfully created`));
     }
     async getGameSessions(req, res) {
-        const gameSessions = await gameSessionsService.getGameSessions();
+        const { page, amount } = req.query;
+        const gameSessions = await gameSessionsService.getGameSessions({ page, amount });
 
         res.status(StatusCodes.OK).json(gameSessions);
     }

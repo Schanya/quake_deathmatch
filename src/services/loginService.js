@@ -1,8 +1,9 @@
 const { BadRequestError } = require("../errors");
-const usersRepository = require("../repositories/usersRepository");
 const bcrypt = require('bcrypt');
-const rolesRepository = require("../repositories/rolesRepository");
 const Token = require("../utils/jwt");
+
+const usersRepository = require("../repositories/usersRepository");
+const rolesRepository = require("../repositories/rolesRepository");
 
 class LoginService {
     userLogin = async (name, password) => {
