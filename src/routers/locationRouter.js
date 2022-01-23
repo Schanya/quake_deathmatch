@@ -13,7 +13,7 @@ const locationSchema = require('../schemes/locationSchema');
 
 router.post('/create', isAdmin(admin), validation(locationSchema, 'body'), requestWrap(controller.addLocation));
 
-router.delete('/delete', isAdmin(admin), requestWrap(controller.deleteLocation));
+router.delete('/:id/delete', isAdmin(admin), requestWrap(controller.deleteLocation));
 
 router.get('/list', requestWrap(controller.getLocations));
 

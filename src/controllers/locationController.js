@@ -12,8 +12,8 @@ class LocationController {
         res.status(StatusCodes.OK).json(new Response(`Location ${name} has been successfully created`));
     }
     async deleteLocation(req, res) {
-        const { name } = req.body;
-        await locationsService.deleteLocation(name);
+        const id = req.params.id;
+        await locationsService.deleteLocation(id);
 
         res.status(StatusCodes.OK).json(new Response(`Your location has been successfully deleted`));
     }

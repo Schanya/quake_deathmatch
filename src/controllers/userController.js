@@ -17,9 +17,9 @@ class UserController {
         res.status(StatusCodes.OK).json(new Response(`Your account has been successfully deleted`));
     }
     async connectingToGameSession(req, res) {
-        const { name: sessionName } = req.body;
+        const sessionId = req.params.id;
         const userId = req.user.id;
-        await usersService.connectingToSession(sessionName, userId);
+        await usersService.connectingToSession(sessionId, userId);
 
         res.status(StatusCodes.OK).json(new Response(`You have successfully connected to the game`));
     }

@@ -20,19 +20,17 @@ class LocationsService {
     addLocation = async (name, description, poster, file, max_users) => {
         await locationsRepository.createLocation(name, description, poster, file, max_users);
     }
-    deleteLocation = async (locationName) => {
+    deleteLocation = async (locationId) => {
         //прояверть связана ли локация с сессией и если связана с не активной, то удалять и сессию
         //как вынести транзакцию отдельно в какой-нибудь мидлвар или что-то типо того?
         const transaction = await sequelize.transaction();
         try {
-            const location = await locationsRepository.getLocation(locationName, transaction);
-
-            const locationId = location.id;
-
             await locationsRepository.deleteLocation(locationId, transaction)
+
             transaction.commit();
         } catch (error) {
             transaction.rollback();
+
             throw new Delete('Failed to delete location');
         }
 

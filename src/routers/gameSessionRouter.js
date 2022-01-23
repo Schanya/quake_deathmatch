@@ -13,7 +13,7 @@ router.post('/create', validation(gameSessionSchema, 'body'), requestWrap(contro
 
 router.get('/list', requestWrap(controller.getGameSessions));
 
-router.get('/detailedInformation', requestWrap(controller.getDetailedInformation));
+router.get('/:id/detailedInformation', requestWrap(controller.getDetailedInformation));
 
 router.get('/:id/users', requestWrap(controller.getUsersByGameSession));
 

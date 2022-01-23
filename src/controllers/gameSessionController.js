@@ -19,7 +19,7 @@ class GameSessionController {
         res.status(StatusCodes.OK).json(gameSessions);
     }
     async getDetailedInformation(req, res) {
-        const { id } = req.body;
+        const id = req.params.id;
         const gameSession = await gameSessionsService.getDetailedInformation(id);
 
         res.status(StatusCodes.OK).json(gameSession);

@@ -1,8 +1,8 @@
 const db = require('../models');
 
 class Locations {
-    async getLocation(name, transaction) {
-        const newLocation = await db.Location.findOne({ where: { name } }, { transaction });
+    async getLocation(id, transaction) {
+        const newLocation = await db.Location.findOne({ where: { id } }, { transaction });
 
         return newLocation;
     }

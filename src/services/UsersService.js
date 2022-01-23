@@ -19,9 +19,9 @@ class UsersService {
 
         return user;
     }
-    connectingToSession = async (sessionName, userId) => {
+    connectingToSession = async (sessionId, userId) => {
         //Наверное стоит передавать не название сессии, а id
-        const gameSession = await gameSessionRepository.getGameSessionByName(sessionName);
+        const gameSession = await gameSessionRepository.getGameSessionById(sessionId);
 
         if (!gameSession) {
             throw new NotFoundError(`Game session ${gameSession.name} not exist`);
