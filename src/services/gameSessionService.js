@@ -30,7 +30,7 @@ class GameSessionsService {
         return users;
     }
     addGameSession = async (name, max_users, userId, nameLocation) => {
-        const location = await locationService.getLocation(nameLocation);
+        const location = await locationService.getLocationByName(nameLocation);
         const is_active = true;
         const newGameSession = await gameSessionsRepository.createGameSession(name, max_users, is_active);
 

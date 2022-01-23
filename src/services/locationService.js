@@ -5,8 +5,13 @@ const pagination = require('../helpers/pagination');
 const locationsRepository = require('../repositories/locationsRepository');
 
 class LocationsService {
-    getLocation = async (name) => {
-        const newLocation = await locationsRepository.getLocation(name);
+    getLocation = async (id) => {
+        const newLocation = await locationsRepository.getLocation(id);
+
+        return newLocation;
+    }
+    getLocationByName = async (name) => {
+        const newLocation = await locationsRepository.getLocationByName(name);
 
         return newLocation;
     }

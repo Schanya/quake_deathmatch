@@ -6,6 +6,11 @@ class Locations {
 
         return newLocation;
     }
+    async getLocationByName(name, transaction) {
+        const newLocation = await db.Location.findOne({ where: { name } }, { transaction });
+
+        return newLocation;
+    }
     async getLocations({ ofset, limit }) {
         const locations = await db.Location.findAll({
             ofset, limit,
