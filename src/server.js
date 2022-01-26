@@ -22,5 +22,8 @@ const main = async () => {
   });
 }
 
-main();
+module.exports.app = (async () => {
+  await main();
+  return app
+})();
 
