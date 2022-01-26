@@ -11,12 +11,11 @@ const requestWrap = require('../middleware/requestWrap');
 const { ADMIN: admin } = require('../helpers/constants');
 const { USER: user } = require('../helpers/constants');
 
-
 router.get('/users', isAdmin(admin), requestWrap(controller.getUsers));
 
-router.post('/delete', isUser(user), requestWrap(controller.deleteUser));
+router.delete('/:id/delete', isUser(user), requestWrap(controller.deleteUser));
 
-router.get('/connecting', requestWrap(controller.connectingToGameSession));
+router.post('/:id/connecting', requestWrap(controller.connectingToGameSession));
 
 router.post('/disconnecting', requestWrap(controller.disconnectingFromGameSession));
 

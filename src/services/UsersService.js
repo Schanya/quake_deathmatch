@@ -1,11 +1,13 @@
 const { NotFoundError } = require('../errors');
-const { getGameSession } = require('../repositories/gameSessionRepository');
+const pagination = require('../helpers/pagination');
+
 const gameSessionRepository = require('../repositories/gameSessionRepository');
 const usersRepository = require('../repositories/usersRepository');
 
 class UsersService {
-    getUsers = async () => {
-        const users = await usersRepository.getAllUsers();
+    getUsers = async ({ page, amount }) => {
+        const options = pagination({ page, amount });
+        const users = await usersRepository.getAllUsers(options);
         return users;
     }
     deleteUser = async (userId) => {
@@ -17,15 +19,16 @@ class UsersService {
 
         return user;
     }
-    connectingToSession = async (sessionName, userId) => {
-        const gameSession = await gameSessionRepository.getGameSessionByName(sessionName);
+    connectingToSession = async (sessionId, userId) => {
+        //Наверное стоит передавать не название сессии, а id
+        const gameSession = await gameSessionRepository.getGameSessionById(sessionId);
 
         if (!gameSession) {
             throw new NotFoundError(`Game session ${gameSession.name} not exist`);
         }
         //добавить проверку, если игрок уже подключён к какой-то игре
         const user = await usersRepository.findById(userId);
-        const users = await gameSessionRepository.getUsersFromGameSession(gameSession);//переименовать в count
+        const users = await gameSessionRepository.countUsersFromGameSession(gameSession);//переименовать в count
         if (gameSession.max_users === users) {
             throw new NotFoundError(`The maximum number of players in the game`);
         }

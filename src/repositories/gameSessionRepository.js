@@ -1,15 +1,21 @@
-const Location = require('../models/location');
 const db = require('../models');
-//const Location = require('../models/location');
 
 class GameSessions {
-    async getGameSessions(name) {
-        const gameSessions = await db.GameSession.findAll();
+    async getGameSessions({ limit, offset }) {
+        const gameSessions = await db.GameSession.findAll({
+            limit, offset,
+            attributes: ["id", "name", "max_users"]
+        });
 
         return gameSessions;
     }
     async getGameSessionByName(name) {
         const gameSessesion = await db.GameSession.findOne({ where: { name } });
+
+        return gameSessesion;
+    }
+    async getGameSessionById(id) {
+        const gameSessesion = await db.GameSession.findOne({ where: { id } });
 
         return gameSessesion;
     }
@@ -20,15 +26,10 @@ class GameSessions {
 
         return gameSession;
     }
-    async addUserToGameSession(gameSession, user) {
-        await gameSession.addUser(user);
-    }
-    async addGameSessionToLocation(gameSession, location) {
-        await location.addGame_session(gameSession);
-    }
     async getGameSession(id) {
         const gameSession = await db.GameSession.findAll({
             //Убрать из вывода user_sessions
+            where: { id },
             include: [
                 {
                     model: db.Location,
@@ -50,12 +51,23 @@ class GameSessions {
 
         return gameSession;
     }
+    async addUserToGameSession(gameSession, user) {
+        await gameSession.addUser(user);
+    }
+    async addGameSessionToLocation(gameSession, location) {
+        await location.addGame_session(gameSession);
+    }
     async getLocation(gameSession) {
         const location = await gameSession.getLocation();
 
         return location;
     }
-    async getUsersFromGameSession(gameSession) {
+    async getUsersByGameSession(gameSessesion) {
+        const users = await gameSessesion.getUser({ attributes: ["id", "name"] });
+
+        return users;
+    }
+    async countUsersFromGameSession(gameSession) {
         const users = await gameSession.countUser();
 
         return users;

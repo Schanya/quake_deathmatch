@@ -11,7 +11,7 @@ module.exports = (sequelize) => {
             unique: true,
         },
         max_users: {
-            type: DataTypes.STRING,
+            type: DataTypes.INTEGER,
             allowNull: false,
         },
         is_active: {
