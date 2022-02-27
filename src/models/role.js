@@ -12,11 +12,12 @@ module.exports = (sequelize) => {
     }, {
         sequelize,
         modelName: 'role',
-
         name: {
             singular: 'role',
             plural: 'roles',
-        }
+        },
+        deletedAt: true,
+        paranoid: true,
     });
 
     Role.associate = models => {

@@ -2,6 +2,7 @@ const Response = require('../helpers/response');
 const { StatusCodes } = require('http-status-codes');
 
 const locationsService = require('../services/locationService');
+const { query } = require('express');
 
 class LocationController {
     async addLocation(req, res) {
@@ -23,6 +24,13 @@ class LocationController {
         const locations = await locationsService.getLocations({ page, amount });
 
         res.status(StatusCodes.OK).json(locations);
+    }
+    async endoind(req, res) {
+        const yearAndMonth = req.body;
+
+        const location = await locationsService.endpoind(yearAndMonth);
+
+        res.status(StatusCodes.OK).json(location);
     }
 }
 

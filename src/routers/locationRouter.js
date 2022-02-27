@@ -17,4 +17,6 @@ router.delete('/:id/delete', isAdmin(admin), requestWrap(controller.deleteLocati
 
 router.get('/list', requestWrap(controller.getLocations));
 
+router.get('/:id/endpoind', requestWrap(controller.endoind));
+
 module.exports = router;

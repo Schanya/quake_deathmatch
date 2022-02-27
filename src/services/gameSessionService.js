@@ -1,9 +1,12 @@
+const { BadRequestError } = require('../errors');
+const { sequelize } = require('../models/index');
 const pagination = require('../helpers/pagination');
 
 const gameSessionsRepository = require('../repositories/gameSessionRepository');
+const locationsRepository = require('../repositories/locationsRepository');
+const usersRepository = require('../repositories/usersRepository');
 
-const locationService = require('./locationService');
-const usersService = require('./usersService');
+const Delete = require('../errors/deleteError');
 
 
 class GameSessionsService {
@@ -30,14 +33,27 @@ class GameSessionsService {
         return users;
     }
     addGameSession = async (name, max_users, userId, nameLocation) => {
-        const location = await locationService.getLocationByName(nameLocation);
-        const is_active = true;
-        const newGameSession = await gameSessionsRepository.createGameSession(name, max_users, is_active);
+        const transaction = await sequelize.transaction();
+        try {
+            const location = await locationsRepository.getLocationByName(nameLocation, transaction);
+            const is_active = true;
+            const newGameSession = await gameSessionsRepository.createGameSession(name, max_users, is_active, transaction);
 
-        const user = await usersService.getUserById(userId);
-        await gameSessionsRepository.addUserToGameSession(newGameSession, user);
+            const user = await usersRepository.findById(userId, transaction);
+            const isUserHaveGameSession = await usersRepository.countGameSession(user, transaction);
 
-        await gameSessionsRepository.addGameSessionToLocation(newGameSession, location);
+            if (isUserHaveGameSession !== 0) {
+                throw new BadRequestError('You can not create a game session, you are already connected to the game session');
+            } else {
+                await gameSessionsRepository.addUserToGameSession(newGameSession, user, transaction);
+
+                await gameSessionsRepository.addGameSessionToLocation(newGameSession, location, transaction);
+            }
+        } catch (error) {
+            transaction.rollback();
+
+            throw new Delete('Failed to create session');
+        }
     }
 
     // deleteLocation = async (locationName) => {
