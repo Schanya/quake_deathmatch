@@ -3,10 +3,11 @@ const { sequelize } = require('../models');
 const pagination = require('../helpers/pagination');
 
 const locationsRepository = require('../repositories/locationsRepository');
+const gameSessionRepository = require('../repositories/gameSessionRepository');
 
 class LocationsService {
     getLocation = async (id) => {
-        const newLocation = await locationsRepository.getLocation(id);
+        const newLocation = await locationsRepository.getLocationById(id);
 
         return newLocation;
     }
@@ -26,19 +27,33 @@ class LocationsService {
         await locationsRepository.createLocation(name, description, poster, file, max_users);
     }
     deleteLocation = async (locationId) => {
-        //прояверть связана ли локация с сессией и если связана с не активной, то удалять и сессию
-        //как вынести транзакцию отдельно в какой-нибудь мидлвар или что-то типо того?
         const transaction = await sequelize.transaction();
         try {
-            await locationsRepository.deleteLocation(locationId, transaction)
+            const location = await locationsRepository.getLocationById(locationId, transaction);
+            const gameSessions = await locationsRepository.getGameSessions(location);
+            const gameSessionIds = gameSessions.map((gameSession) => gameSession.id);
+            const gameSessionConditions = gameSessions.map((gameSession) => gameSession.active);
+            if (gameSessionConditions.forEach(condition => condition === true)) {
+                throw new Delete('Some session is active can not delete this location');
+            } else {
+                gameSessionIds.forEach(async (sessionId) => {
+                    await gameSessionRepository.deleteGameSession(sessionId, transaction);
+                })
+                await locationsRepository.deleteLocation(locationId, transaction)
 
-            transaction.commit();
+                transaction.commit();
+            }
         } catch (error) {
             transaction.rollback();
 
             throw new Delete('Failed to delete location');
         }
 
+    }
+    endpoind = async (yearAndMonth) => {
+        const location = await locationsRepository.getLocationWithotORM(yearAndMonth);
+
+        return location;
     }
 }
 

@@ -31,10 +31,15 @@ class Users {
     async deleteUser(id) {
         await db.User.destroy({ where: { id } })
     }
-    async findById(id) {
-        const user = await db.User.findOne({ where: { id } });
+    async findById(id, transaction) {
+        const user = await db.User.findOne({ where: { id } }, { transaction });
 
         return user;
+    }
+    async countGameSession(user, transaction) {
+        const usersGameSession = await user.countGame_session({ transaction });
+
+        return usersGameSession;
     }
 }
 

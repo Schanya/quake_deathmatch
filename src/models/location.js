@@ -25,7 +25,8 @@ module.exports = (sequelize) => {
     }, {
         sequelize,
         modelName: 'location',
-
+        deletedAt: true,
+        paranoid: true,
         name: {
             singular: 'location',
             plural: 'locations',
@@ -38,7 +39,8 @@ module.exports = (sequelize) => {
                 foreignKey: {
                     name: 'location_id',
                     //allowNull: false
-                }
+                },
+                onDelete: 'CASCADE',
             });
     };
 

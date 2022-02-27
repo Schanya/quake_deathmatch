@@ -16,11 +16,12 @@ module.exports = (sequelize) => {
         },
         is_active: {
             type: DataTypes.BOOLEAN,
-        }
+        },
     }, {
         sequelize,
         modelName: 'game_session',
-
+        deletedAt: true,
+        paranoid: true,
         name: {
             simple: 'game_session',
             plural: 'game_sessions',
@@ -36,7 +37,7 @@ module.exports = (sequelize) => {
         GameSession.belongsTo(models.Location, {
             foreignKey: {
                 name: 'location_id'
-            }
+            },
         })
     }
 
