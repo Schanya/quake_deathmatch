@@ -4,7 +4,8 @@ dotenv.config();
 
 module.exports = {
     app: {
-        port: process.env.APP_PORT || 3000
+        port: process.env.APP_PORT || 3000,
+        resDir: process.env.RESOURCE_DIR
     },
 
     db: {
@@ -25,5 +26,12 @@ module.exports = {
 
     logger: {
         level: (process.env.LOGLEVEL || 'debug').toLowerCase(),
+    },
+
+    multer: {
+        imageDir: process.env.IMAGE_DIR || "images",
+        fileDir: process.env.FILE_DIR || "files",
+        maxSize: process.env.MAX_SIZE || 2097152,
+        numberOfFiles: process.env.NUMBER_OF_FILES || 1
     }
 }

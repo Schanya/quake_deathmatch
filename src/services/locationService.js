@@ -1,6 +1,11 @@
-const Delete = require('../errors/deleteError');
 const { sequelize } = require('../models');
+
+const Delete = require('../errors/deleteError');
+const { NotAcceptableError } = require('../errors');
+
 const locationsRepository = require('../repositories/locationsRepository');
+
+const fileHandler = require('../helpers/fileHandler');
 
 class LocationsService {
     getLocation = async (name) => {
@@ -8,7 +13,14 @@ class LocationsService {
 
         return newLocation;
     }
+    getLocationById = async (id) => {
+        const location = await locationsRepository.getLocationById(id);
 
+        return location;
+    }
+    updateLocation = async (id, locationData) => {
+        return await locationsRepository.updateLocation(id, locationData);
+    }
     addLocation = async (name, description, poster, file, max_users) => {
         await locationsRepository.createLocation(name, description, poster, file, max_users);
     }
@@ -28,6 +40,20 @@ class LocationsService {
             throw new Delete('Failed to delete location');
         }
 
+    }
+    setFile = async (file, id, data) => {
+        if (!file) {
+            throw new NotAcceptableError("File was not loaded");
+        }
+
+        const location = await locationsRepository.getLocationById(id);
+        const oldFileName = location.file;
+
+        if (oldFileName && oldFileName !== "no_url") {
+            fileHandler.delete(file, oldFileName);
+        }
+
+        await locationsRepository.updateLocation(id, data);
     }
 }
 

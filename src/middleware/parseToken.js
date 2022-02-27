@@ -5,7 +5,7 @@ const usersRepository = require('../repositories/usersRepository');
 
 const parseToken = () => {
     return async (req, res, next) => {
-        const token = req.headers.authorization.split(' ')[1]
+        const token = req.headers.authorization?.split(' ')[1];
 
         if (!token) {
             throw new Forbidden('User not logged in');
