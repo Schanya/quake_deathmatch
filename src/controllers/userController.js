@@ -8,7 +8,7 @@ class UserController {
         const { page, amount } = req.query;
         const users = await usersService.getUsers({ page, amount });
 
-        res.json(users);
+        res.status(StatusCodes.OK).json(new Response(users));
     }
     async deleteUser(req, res) {
         const userId = req.user.id;

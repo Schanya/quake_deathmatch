@@ -22,7 +22,7 @@ class LocationController {
 
         const locations = await locationsService.getLocations({ page, amount });
 
-        res.status(StatusCodes.OK).json(locations);
+        res.status(StatusCodes.OK).json(new Response(locations));
     }
 }
 
