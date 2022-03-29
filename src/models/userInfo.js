@@ -23,7 +23,9 @@ module.exports = (sequelize) => {
         name: {
             simple: 'user_info',
             plural: 'users_info',
-        }
+        },
+        deletedAt: true,
+        paranoid: true,
     });
 
     return UserInfo;

@@ -11,16 +11,17 @@ module.exports = (sequelize) => {
             unique: true,
         },
         max_users: {
-            type: DataTypes.NUMBER,
+            type: DataTypes.INTEGER,
             allowNull: false,
         },
         is_active: {
             type: DataTypes.BOOLEAN,
-        }
+        },
     }, {
         sequelize,
         modelName: 'game_session',
-
+        deletedAt: true,
+        paranoid: true,
         name: {
             simple: 'game_session',
             plural: 'game_sessions',
@@ -36,7 +37,7 @@ module.exports = (sequelize) => {
         GameSession.belongsTo(models.Location, {
             foreignKey: {
                 name: 'location_id'
-            }
+            },
         })
     }
 

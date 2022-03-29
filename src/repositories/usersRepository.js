@@ -29,6 +29,16 @@ class Users {
 
         return user;
     }
+    async countGameSession(user, transaction) {
+        const usersGameSession = await user.countGame_session({ transaction });
+
+        return usersGameSession;
+    }
+    async getGameSession(user, transaction) {
+        const userGameSession = await user.getGame_session({ transaction });
+
+        return userGameSession;
+    }
 }
 
 module.exports = new Users();

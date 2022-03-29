@@ -9,7 +9,7 @@ const validation = require('../middleware/validation');
 
 const gameSessionSchema = require('../schemes/gameSessionSchema');
 
-router.post('/create', validation(gameSessionSchema, 'body'), requestWrap(controller.addGameSession));
+router.post('/:id/create', validation(gameSessionSchema, 'body'), requestWrap(controller.addGameSession));
 
 router.get('/list', requestWrap(controller.getGameSessions));
 

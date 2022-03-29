@@ -17,6 +17,8 @@ module.exports = (sequelize) => {
     }, {
         sequelize,
         modelName: 'user',
+        deletedAt: true,
+        paranoid: true,
 
         name: {
             simple: 'user',
@@ -34,8 +36,11 @@ module.exports = (sequelize) => {
             through: "user_sessions",
             as: "game_session",
             foreignKey: "user_id",
+            onDelete: 'CASCADE',
         });
-        User.hasOne(models.UserInfo);
+        User.hasOne(models.UserInfo, {
+            onDelete: 'CASCADE',
+        });
     }
     return User;
 }

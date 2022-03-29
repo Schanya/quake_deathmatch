@@ -11,9 +11,6 @@ module.exports = Joi.object().keys({
         .min(2)
         .max(10)
         .integer()
-        .positive(),
+        .positive()
 
-    //Я создаю сессию, и что бы добавить локацию, нужно ввести название локации, это верно
-    //или нужно что-то как-то из url брать?
-    nameLocation: Joi.string()
 });

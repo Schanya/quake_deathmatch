@@ -13,18 +13,18 @@ class GameSessions {
 
         return gameSessesion;
     }
-    async createGameSession(name, max_users, is_active) {
-        const gameSession = new db.GameSession({ name, max_users, is_active });
+    async createGameSession(name, max_users, is_active, transaction) {
+        const gameSession = new db.GameSession({ name, max_users, is_active }, { transaction });
 
-        await gameSession.save();
+        await gameSession.save({ transaction });
 
         return gameSession;
     }
-    async addUserToGameSession(gameSession, user) {
-        await gameSession.addUser(user);
+    async addUserToGameSession(gameSession, user, transaction) {
+        await gameSession.addUser(user, { transaction });
     }
-    async addGameSessionToLocation(gameSession, location) {
-        await location.addGame_session(gameSession);
+    async addGameSessionToLocation(gameSession, location, transaction) {
+        await location.addGame_session(gameSession, { transaction });
     }
     async getGameSession(id) {
         const gameSession = await db.GameSession.findAll({
@@ -73,9 +73,12 @@ class GameSessions {
 
         return count;
     }
-    // async deleteLocation(id) {
-    //     await db.Location.destroy({ where: { id } })
-    // }
+    async deleteGameSession(id, transaction) {
+        await db.GameSession.destroy({ where: { id } }, { transaction });
+    }
+    async update(gameSession, options) {
+        await gameSession.update(options);
+    }
 }
 
 module.exports = new GameSessions();

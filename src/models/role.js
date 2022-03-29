@@ -16,7 +16,9 @@ module.exports = (sequelize) => {
         name: {
             singular: 'role',
             plural: 'roles',
-        }
+        },
+        deletedAt: true,
+        paranoid: true,
     });
 
     Role.associate = models => {

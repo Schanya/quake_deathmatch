@@ -5,10 +5,11 @@ const GameSessionsService = require('../services/gameSessionService');
 
 class GameSessionController {
     async addGameSession(req, res) {
-        const { name, max_users, nameLocation } = req.body;
+        const { name, max_users } = req.body;
+        const locationID = req.params.id;
         const userId = req.user.id;
 
-        await GameSessionsService.addGameSession(name, max_users, userId, nameLocation);
+        await GameSessionsService.addGameSession(name, max_users, userId, locationID);
 
         res.status(StatusCodes.OK).json(new Response(`Game session ${name} has been successfully created`));
     }
