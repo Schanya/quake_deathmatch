@@ -29,6 +29,14 @@ class UserController {
 
         res.status(StatusCodes.OK).json(new Response(`You have successfully disconnected to the game`));
     }
+    //Implement an endpoind for analytics without using ORM 
+    //to find users who have an average connection rate to 
+    //game sessions >= than the average of all users.
+    async endpoint(req, res) {
+        const result = await usersService.endpoint();
+
+        res.status(StatusCodes.OK).json(result);
+    }
 }
 
 module.exports = new UserController()
