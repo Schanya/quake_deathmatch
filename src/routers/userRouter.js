@@ -19,4 +19,6 @@ router.post('/:id/connecting', requestWrap(controller.connectingToGameSession));
 
 router.post('/disconnecting', requestWrap(controller.disconnectingFromGameSession));
 
+router.get('/endpoint', requestWrap(controller.endpoint));
+
 module.exports = router;

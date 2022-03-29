@@ -41,6 +41,37 @@ class Users {
 
         return usersGameSession;
     }
+    async endpoint() {
+        const result = await db.sequelize.query(
+            `SELECT 
+    result.user_id, number
+FROM
+    (SELECT 
+        user_id,
+            COUNT(game_session_id) / (SELECT 
+                    COUNT(*)
+                FROM
+                    quake_db.game_sessions) AS number
+    FROM
+        quake_db.user_sessions
+    GROUP BY user_id) AS result
+WHERE
+    result.number >= (SELECT 
+            AVG(number)
+        FROM
+            (SELECT 
+                user_id,
+                    COUNT(game_session_id) / (SELECT 
+                            COUNT(*)
+                        FROM
+                            quake_db.game_sessions) AS number
+            FROM
+                quake_db.user_sessions
+            GROUP BY user_id) AS primer);`
+        )
+
+        return result;
+    }
 }
 
 module.exports = new Users();

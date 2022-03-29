@@ -67,6 +67,11 @@ class UsersService {
             }
         })
     }
+    endpoint = async () => {
+        const result = usersRepository.endpoint();
+
+        return result;
+    }
 }
 
 module.exports = new UsersService();
